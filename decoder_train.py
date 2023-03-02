@@ -24,16 +24,21 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "0, 1"
 
 if __name__ == '__main__':
     set_seed(42)
-    torch.distributed.init_process_group(backend="nccl")
-    local_rank = torch.distributed.get_rank()
-    torch.cuda.set_device(local_rank)
-    device = torch.device("cuda", local_rank)
-    world_size = torch.distributed.get_world_size()
+    
+    
     config = DecoderConfig()
     config.loadFromFile('./configs/decoder/config_rams.json')
     config.initTensorBoard()
     config.initLogger()
     config.copyExpScript()
+    
+    
+    torch.distributed.init_process_group(backend="nccl")
+    local_rank = torch.distributed.get_rank()
+    config.local_rank = local_rank
+
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
     config.device = device
 
     model = Decoder(config)
@@ -41,7 +46,7 @@ if __name__ == '__main__':
 
     # model = DataParallel(model, device_ids=[0, 1])
     model.to(config.device)
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank],find_unused_parameters=True)
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank], output_device=local_rank, find_unused_parameters=True)
     try:
         # 加载数据集
         data_processer = DecoderLoader(config)

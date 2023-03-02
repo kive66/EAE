@@ -147,10 +147,17 @@ class DecoderTrainer(TrainerBasic):
             pred_arg_spans.append(pred_arg_span)
         return pred_arg_spans
 
-
+    # 如果一个位置的概率超过阈值，将包含该次的实体以及该实体的所有span添加
+    # def judge_id_in_span(self, id, entity_span):
+    #     for entity in entity_span:
+    #         for span in entity:
+    #             if id in range(span[0], span[1]):
+    #                 return entity
+    #     return None
+    
     def judge_id_in_span(self, id, entity_span):
         for entity in entity_span:
             for span in entity:
                 if id in range(span[0], span[1]):
-                    return entity
+                    return [span]
         return None

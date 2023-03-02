@@ -21,4 +21,5 @@ class DecoderConfig(Config):
         self.drop_rate = dict_config['drop_rate']
         self.max_role_num = dict_config['max_role_num']
         self.event_path = dict_config['event_path']
+        self.local_rank = -1
 
