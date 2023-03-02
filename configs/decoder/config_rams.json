@@ -1,0 +1,42 @@
+{
+    "exp_purpose": "decode",
+    "model": "bert",
+    "dataset": "rams",
+    "train_path": "data/rams/decoder/train.json",
+    "dev_path": "data/rams/decoder/dev.json",
+    "test_path": "data/rams/decoder/test.json",
+    "raw_path" :"data/rams/decoder/",
+    "event_path": "data/rams/event_role_multiplicities.txt",
+    "save_path": "./exp/",
+    "project_path": "./",
+    "save_scriptList": [
+        "utils",
+        "models",
+        "trainer",
+        "configs"
+    ],
+
+    "do_train": true,
+    "do_test": false,
+    "require_improvement": 200000000,
+    "num_epochs": 20,
+    "batch_size": 2,
+    "test_batch_size": 2,
+ 
+    "basic_learning_rate": 1e-4,
+    "encoder_learning_rate": 3e-5,
+    "pretrain_path": "bert-base-uncased",
+    "hidden_size": 768,
+    "rate_warmup_steps": 0.1,
+    "drop_rate": 0.5,
+    "drop_last": true,
+    
+    "max_seq_len": 512,
+    "max_desc_seq_len": 512,
+    "max_role_num" : 5,
+    "eval_step": 10,
+    "log_step": 100,
+    "shuffle": true,
+    "num_workers": 1,
+    "threshold" : 0.4
+}

@@ -1,0 +1,51 @@
+2023-03-01 10:20:23,142 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-03-01 10:20:23,142 - config.py - 113 - INFO - exp_purpose: decode
+2023-03-01 10:20:23,142 - config.py - 113 - INFO - model: bert
+2023-03-01 10:20:23,142 - config.py - 113 - INFO - dataset: rams
+2023-03-01 10:20:23,142 - config.py - 113 - INFO - train_path: data/rams/decoder/train.json
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - test_path: data/rams/decoder/test.json
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - exp_path: ./exp/
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - save_path: exp/2023-03-01/rams_bert_20230301102022/best.pth
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - project_path: ./
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - save_scriptList: ['utils', 'models', 'trainer', 'configs']
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - do_train: True
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - do_test: False
+2023-03-01 10:20:23,143 - config.py - 113 - INFO - require_improvement: 200000000
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - num_epochs: 20
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - batch_size: 1
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - test_batch_size: 1
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - max_seq_len: 512
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - eval_step: 100
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - log_step: 100
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - pretrain_path: bert-base-uncased
+2023-03-01 10:20:23,144 - config.py - 113 - INFO - hidden_size: 768
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - logger: <Logger 20230301102022 (DEBUG)>
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-base-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - device: cuda
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-03-01 10:20:23,145 - config.py - 113 - INFO - shuffle: True
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - drop_last: True
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - num_workers: 4
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - startTime: 20230301102022
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - dev_path: data/rams/decoder/dev.json
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - path: exp/2023-03-01/rams_bert_20230301102022
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - log_path: exp/2023-03-01/rams_bert_20230301102022/logs.log
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - tensorBoard_path: exp/2023-03-01/rams_bert_20230301102022/tensorboard
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - script_path: exp/2023-03-01/rams_bert_20230301102022/script
+2023-03-01 10:20:23,146 - config.py - 113 - INFO - threshold: 0.5
+2023-03-01 10:20:23,147 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-03-01 10:20:23,147 - config.py - 113 - INFO - drop_rate: 0.5
+2023-03-01 10:20:23,147 - config.py - 113 - INFO - max_role_num: 5
+2023-03-01 10:20:23,147 - config.py - 113 - INFO - event_path: data/rams/event_role_multiplicities.txt
+2023-03-01 10:20:23,147 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7f3958063be0>
+2023-03-01 10:20:23,147 - config.py - 114 - INFO - ****************************
+2023-03-01 10:20:30,033 - decoder_train.py - 36 - INFO - load train set......
+2023-03-01 10:20:32,497 - decoder_train.py - 40 - INFO - load test set......
+2023-03-01 10:20:33,005 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-03-01 10:20:34,391 - basic_trainer.py - 191 - INFO - step: 0/7327, Train loss: 1.21
+2023-03-01 10:22:10,537 - basic_trainer.py - 191 - INFO - step: 100/7327, Train loss: 9.26
+2023-03-01 10:22:10,654 - basic_trainer.py - 230 - INFO - *****evaluating*****
+2023-03-01 10:22:18,217 - decoder_trainer.py - 46 - INFO - tensor([[2.9509e-06, 1.0599e-08, 1.3482e-08,  ..., 0.0000e+00, 0.0000e+00,
+         0.0000e+00]], device='cuda:0')

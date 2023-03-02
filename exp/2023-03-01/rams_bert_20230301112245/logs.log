@@ -1,0 +1,65 @@
+2023-03-01 11:22:46,669 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - exp_purpose: decode
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - model: bert
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - dataset: rams
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - train_path: data/rams/decoder/train.json
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - test_path: data/rams/decoder/test.json
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - exp_path: ./exp/
+2023-03-01 11:22:46,670 - config.py - 113 - INFO - save_path: exp/2023-03-01/rams_bert_20230301112245/best.pth
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - project_path: ./
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - save_scriptList: ['utils', 'models', 'trainer', 'configs']
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - do_train: True
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - do_test: False
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - require_improvement: 200000000
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - num_epochs: 20
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - batch_size: 1
+2023-03-01 11:22:46,671 - config.py - 113 - INFO - test_batch_size: 1
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - max_seq_len: 512
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - eval_step: 10
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - log_step: 100
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - pretrain_path: bert-base-uncased
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - hidden_size: 768
+2023-03-01 11:22:46,672 - config.py - 113 - INFO - logger: <Logger 20230301112245 (DEBUG)>
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-base-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - device: cuda
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - shuffle: True
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - drop_last: True
+2023-03-01 11:22:46,673 - config.py - 113 - INFO - num_workers: 4
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - startTime: 20230301112245
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - dev_path: data/rams/decoder/dev.json
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - path: exp/2023-03-01/rams_bert_20230301112245
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - log_path: exp/2023-03-01/rams_bert_20230301112245/logs.log
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - tensorBoard_path: exp/2023-03-01/rams_bert_20230301112245/tensorboard
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - script_path: exp/2023-03-01/rams_bert_20230301112245/script
+2023-03-01 11:22:46,674 - config.py - 113 - INFO - threshold: 0.5
+2023-03-01 11:22:46,675 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-03-01 11:22:46,675 - config.py - 113 - INFO - drop_rate: 0.5
+2023-03-01 11:22:46,675 - config.py - 113 - INFO - max_role_num: 5
+2023-03-01 11:22:46,675 - config.py - 113 - INFO - event_path: data/rams/event_role_multiplicities.txt
+2023-03-01 11:22:46,675 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7f3032379eb0>
+2023-03-01 11:22:46,675 - config.py - 114 - INFO - ****************************
+2023-03-01 11:22:53,509 - decoder_train.py - 36 - INFO - load train set......
+2023-03-01 11:22:56,000 - decoder_train.py - 40 - INFO - load test set......
+2023-03-01 11:22:56,530 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-03-01 11:22:57,998 - basic_trainer.py - 191 - INFO - step: 0/7327, Train loss: 1.21
+2023-03-01 11:23:07,645 - basic_trainer.py - 230 - INFO - *****evaluating*****
+2023-03-01 11:32:24,446 - decoder_train.py - 48 - ERROR - Traceback (most recent call last):
+  File "/home/wqw/code/BertSum/decoder_train.py", line 46, in <module>
+    trainer.train()
+  File "/home/wqw/code/BertSum/trainer/basic_trainer.py", line 203, in train
+    self.maybe_log_evaluate_save()
+  File "/home/wqw/code/BertSum/trainer/basic_trainer.py", line 231, in maybe_log_evaluate_save
+    current_metrics = self.evaluate(self.test_dataloader, 'test')
+  File "/home/wqw/miniconda3/envs/BertSum/lib/python3.8/site-packages/torch/autograd/grad_mode.py", line 26, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/wqw/code/BertSum/trainer/basic_trainer.py", line 258, in evaluate
+    metrics = self.calculate_matrics_and_save_log(test_log_cache, tag)
+  File "/home/wqw/code/BertSum/trainer/decoder/decoder_trainer.py", line 81, in calculate_matrics_and_save_log
+    self.write_rams_result(log_cache['true_arg_names'], log_cache['true_args'], log_cache['pred_args'])
+  File "/home/wqw/code/BertSum/trainer/decoder/decoder_trainer.py", line 128, in write_rams_result
+    write_json(result)
+TypeError: write_json() missing 1 required positional argument: 'path'
+

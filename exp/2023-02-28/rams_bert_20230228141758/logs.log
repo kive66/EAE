@@ -1,0 +1,58 @@
+2023-02-28 14:17:59,164 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-02-28 14:17:59,165 - config.py - 113 - INFO - exp_purpose: decode
+2023-02-28 14:17:59,165 - config.py - 113 - INFO - model: bert
+2023-02-28 14:17:59,165 - config.py - 113 - INFO - dataset: rams
+2023-02-28 14:17:59,165 - config.py - 113 - INFO - train_path: data/rams/decoder/train.json
+2023-02-28 14:17:59,165 - config.py - 113 - INFO - test_path: data/rams/decoder/test.json
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - exp_path: ./exp/
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - save_path: exp/2023-02-28/rams_bert_20230228141758/best.pth
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - project_path: ./
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - save_scriptList: ['utils', 'models', 'trainer', 'configs']
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - do_train: True
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - do_test: False
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - require_improvement: 200000000
+2023-02-28 14:17:59,166 - config.py - 113 - INFO - num_epochs: 20
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - batch_size: 2
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - test_batch_size: 1
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - max_seq_len: 512
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - eval_step: 230
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - log_step: 20
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - pretrain_path: bert-base-uncased
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - hidden_size: 768
+2023-02-28 14:17:59,167 - config.py - 113 - INFO - logger: <Logger 20230228141758 (DEBUG)>
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-base-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - device: cuda
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - shuffle: True
+2023-02-28 14:17:59,168 - config.py - 113 - INFO - drop_last: True
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - num_workers: 4
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - startTime: 20230228141758
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - dev_path: data/rams/decoder/dev.json
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - path: exp/2023-02-28/rams_bert_20230228141758
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - log_path: exp/2023-02-28/rams_bert_20230228141758/logs.log
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - tensorBoard_path: exp/2023-02-28/rams_bert_20230228141758/tensorboard
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - script_path: exp/2023-02-28/rams_bert_20230228141758/script
+2023-02-28 14:17:59,169 - config.py - 113 - INFO - threshold: 0.4
+2023-02-28 14:17:59,170 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-02-28 14:17:59,170 - config.py - 113 - INFO - drop_rate: 0.5
+2023-02-28 14:17:59,170 - config.py - 113 - INFO - max_role_num: 5
+2023-02-28 14:17:59,170 - config.py - 113 - INFO - event_path: data/rams/event_role_multiplicities.txt
+2023-02-28 14:17:59,170 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7f40843dcb50>
+2023-02-28 14:17:59,170 - config.py - 114 - INFO - ****************************
+2023-02-28 14:18:05,662 - decoder_train.py - 35 - INFO - load train set......
+2023-02-28 14:18:05,976 - decoder_train.py - 39 - INFO - load test set......
+2023-02-28 14:18:06,266 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-02-28 14:18:07,749 - basic_trainer.py - 191 - INFO - step: 0/460, Train loss: 447.72
+2023-02-28 14:18:24,009 - basic_trainer.py - 191 - INFO - step: 20/460, Train loss: 1431.33
+2023-02-28 14:18:40,468 - basic_trainer.py - 191 - INFO - step: 40/460, Train loss: 833.78
+2023-02-28 14:18:56,275 - basic_trainer.py - 191 - INFO - step: 60/460, Train loss: 620.93
+2023-02-28 14:19:12,655 - basic_trainer.py - 191 - INFO - step: 80/460, Train loss: 158.38
+2023-02-28 14:19:28,743 - basic_trainer.py - 191 - INFO - step: 100/460, Train loss: 39.66
+2023-02-28 14:19:44,637 - basic_trainer.py - 191 - INFO - step: 120/460, Train loss: 22.26
+2023-02-28 14:20:00,583 - basic_trainer.py - 191 - INFO - step: 140/460, Train loss: 23.33
+2023-02-28 14:20:17,075 - basic_trainer.py - 191 - INFO - step: 160/460, Train loss: 21.89
+2023-02-28 14:20:33,305 - basic_trainer.py - 191 - INFO - step: 180/460, Train loss: 20.30
+2023-02-28 14:20:50,377 - basic_trainer.py - 191 - INFO - step: 200/460, Train loss: 22.37
+2023-02-28 14:21:07,106 - basic_trainer.py - 191 - INFO - step: 220/460, Train loss: 20.09

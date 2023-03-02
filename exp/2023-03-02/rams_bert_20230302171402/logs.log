@@ -1,0 +1,120 @@
+2023-03-02 17:14:03,343 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - exp_purpose: decode
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - model: bert
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - dataset: rams
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - train_path: data/rams/decoder/train.json
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - test_path: data/rams/decoder/test.json
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - exp_path: ./exp/
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - save_path: exp/2023-03-02/rams_bert_20230302171402/best.pth
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - project_path: ./
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - save_scriptList: ['utils', 'models', 'trainer', 'configs']
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - do_train: True
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - do_test: False
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - require_improvement: 200000000
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - num_epochs: 20
+2023-03-02 17:14:03,343 - config.py - 113 - INFO - batch_size: 2
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - test_batch_size: 2
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - max_seq_len: 256
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - eval_step: 10
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - log_step: 100
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - pretrain_path: bert-base-uncased
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - hidden_size: 768
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - logger: <Logger 20230302171402 (DEBUG)>
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-base-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - device: cuda
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - shuffle: True
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - drop_last: True
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - num_workers: 4
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - startTime: 20230302171402
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - dev_path: data/rams/decoder/dev.json
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - path: exp/2023-03-02/rams_bert_20230302171402
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - log_path: exp/2023-03-02/rams_bert_20230302171402/logs.log
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - tensorBoard_path: exp/2023-03-02/rams_bert_20230302171402/tensorboard
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - script_path: exp/2023-03-02/rams_bert_20230302171402/script
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - threshold: 0.4
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - drop_rate: 0.5
+2023-03-02 17:14:03,344 - config.py - 113 - INFO - max_role_num: 5
+2023-03-02 17:14:03,345 - config.py - 113 - INFO - event_path: data/rams/event_role_multiplicities.txt
+2023-03-02 17:14:03,345 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7f2fa6940280>
+2023-03-02 17:14:03,345 - config.py - 114 - INFO - ****************************
+2023-03-02 17:14:03,357 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - exp_purpose: decode
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - model: bert
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - dataset: rams
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - train_path: data/rams/decoder/train.json
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - test_path: data/rams/decoder/test.json
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - exp_path: ./exp/
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - save_path: exp/2023-03-02/rams_bert_20230302171402/best.pth
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - project_path: ./
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - save_scriptList: ['utils', 'models', 'trainer', 'configs']
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - do_train: True
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - do_test: False
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - require_improvement: 200000000
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - num_epochs: 20
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - batch_size: 2
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - test_batch_size: 2
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - max_seq_len: 256
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - eval_step: 10
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - log_step: 100
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - pretrain_path: bert-base-uncased
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - hidden_size: 768
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - logger: <Logger 20230302171402 (DEBUG)>
+2023-03-02 17:14:03,357 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-base-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - device: cuda
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - shuffle: True
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - drop_last: True
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - num_workers: 4
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - startTime: 20230302171402
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - dev_path: data/rams/decoder/dev.json
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - path: exp/2023-03-02/rams_bert_20230302171402
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - log_path: exp/2023-03-02/rams_bert_20230302171402/logs.log
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - tensorBoard_path: exp/2023-03-02/rams_bert_20230302171402/tensorboard
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - script_path: exp/2023-03-02/rams_bert_20230302171402/script
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - threshold: 0.4
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - drop_rate: 0.5
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - max_role_num: 5
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - event_path: data/rams/event_role_multiplicities.txt
+2023-03-02 17:14:03,358 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7f052feb12b0>
+2023-03-02 17:14:03,358 - config.py - 114 - INFO - ****************************
+2023-03-02 17:14:06,541 - decoder_train.py - 49 - INFO - load train set......
+2023-03-02 17:14:06,542 - decoder_train.py - 49 - INFO - load train set......
+2023-03-02 17:14:08,553 - decoder_train.py - 55 - INFO - load test set......
+2023-03-02 17:14:08,553 - decoder_train.py - 55 - INFO - load test set......
+2023-03-02 17:14:08,705 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-03-02 17:14:08,705 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-03-02 17:14:10,425 - basic_trainer.py - 191 - INFO - step: 0/1832, Train loss: 627.56
+2023-03-02 17:14:10,491 - basic_trainer.py - 191 - INFO - step: 0/1832, Train loss: 464.82
+2023-03-02 17:14:10,627 - decoder_train.py - 65 - ERROR - Traceback (most recent call last):
+  File "decoder_train.py", line 63, in <module>
+    trainer.train()
+  File "/home/wqw/code/BertSum/trainer/basic_trainer.py", line 183, in train
+    loss, model_output = self.one_step(data)
+  File "/home/wqw/code/BertSum/trainer/decoder/decoder_trainer.py", line 30, in one_step
+    loss, module_output = self.model(token_ids, summar_ids, bertsum_ids, entities_ids, role_ids, token_mask, summar_mask, bertsum_mask, entities_mask, role_ids_mask, role_labels, entity_span, char2token, span2entity)
+  File "/home/wqw/miniconda3/envs/BertSum/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/wqw/miniconda3/envs/BertSum/lib/python3.8/site-packages/torch/nn/parallel/distributed.py", line 606, in forward
+    if self.reducer._rebuild_buckets():
+RuntimeError: Expected to have finished reduction in the prior iteration before starting a new one. This error indicates that your module has parameters that were not used in producing loss. You can enable unused parameter detection by (1) passing the keyword argument `find_unused_parameters=True` to `torch.nn.parallel.DistributedDataParallel`; (2) making sure all `forward` function outputs participate in calculating loss. If you already have done the above two steps, then the distributed data parallel module wasn't able to locate the output tensors in the return value of your module's `forward` function. Please include the loss function and the structure of the return value of `forward` of your module when reporting this issue (e.g. list, dict, iterable).
+
+2023-03-02 17:14:10,683 - decoder_train.py - 65 - ERROR - Traceback (most recent call last):
+  File "decoder_train.py", line 63, in <module>
+    trainer.train()
+  File "/home/wqw/code/BertSum/trainer/basic_trainer.py", line 183, in train
+    loss, model_output = self.one_step(data)
+  File "/home/wqw/code/BertSum/trainer/decoder/decoder_trainer.py", line 30, in one_step
+    loss, module_output = self.model(token_ids, summar_ids, bertsum_ids, entities_ids, role_ids, token_mask, summar_mask, bertsum_mask, entities_mask, role_ids_mask, role_labels, entity_span, char2token, span2entity)
+  File "/home/wqw/miniconda3/envs/BertSum/lib/python3.8/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/wqw/miniconda3/envs/BertSum/lib/python3.8/site-packages/torch/nn/parallel/distributed.py", line 606, in forward
+    if self.reducer._rebuild_buckets():
+RuntimeError: Expected to have finished reduction in the prior iteration before starting a new one. This error indicates that your module has parameters that were not used in producing loss. You can enable unused parameter detection by (1) passing the keyword argument `find_unused_parameters=True` to `torch.nn.parallel.DistributedDataParallel`; (2) making sure all `forward` function outputs participate in calculating loss. If you already have done the above two steps, then the distributed data parallel module wasn't able to locate the output tensors in the return value of your module's `forward` function. Please include the loss function and the structure of the return value of `forward` of your module when reporting this issue (e.g. list, dict, iterable).
+

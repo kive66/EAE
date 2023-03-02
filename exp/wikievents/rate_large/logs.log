@@ -1,0 +1,272 @@
+2023-02-23 16:47:00,204 - config.py - 111 - INFO - ******HYPER-PARAMETERS******
+2023-02-23 16:47:00,204 - config.py - 113 - INFO - exp_purpose: bert_sum
+2023-02-23 16:47:00,204 - config.py - 113 - INFO - model: bert
+2023-02-23 16:47:00,204 - config.py - 113 - INFO - dataset: wikievents
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - train_path: data/wikievents/add_sum/train.bert.pt
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - test_path: data/wikievents/add_sum/test.bert.pt
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - exp_path: ./exp/
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - save_path: exp/2023-02-23/wikievents_bert_20230223164659/best.pth
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - project_path: ./
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - save_scriptList: ['main', 'utils', 'models', 'trainer', 'configs']
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - do_train: True
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - do_test: False
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - require_improvement: 200000000
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - num_epochs: 20
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - batch_size: 8
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - test_batch_size: 128
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - max_seq_len: 512
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - eval_step: 25
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - log_step: 5
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - pretrain_path: bert-large-uncased
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - hidden_size: 1024
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - logger: <Logger 20230223164659 (DEBUG)>
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - tokenizer: BertTokenizerFast(name_or_path='bert-large-uncased', vocab_size=30522, model_max_length=512, is_fast=True, padding_side='right', truncation_side='right', special_tokens={'unk_token': '[UNK]', 'sep_token': '[SEP]', 'pad_token': '[PAD]', 'cls_token': '[CLS]', 'mask_token': '[MASK]'})
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - device: cuda
+2023-02-23 16:47:00,205 - config.py - 113 - INFO - basic_learning_rate: 0.0001
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - encoder_learning_rate: 3e-05
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - rate_warmup_steps: 0.1
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - shuffle: True
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - drop_last: True
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - num_workers: 4
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - startTime: 20230223164659
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - dev_path: data/wikievents/add_sum/dev.bert.pt
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - path: exp/2023-02-23/wikievents_bert_20230223164659
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - log_path: exp/2023-02-23/wikievents_bert_20230223164659/logs.log
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - tensorBoard_path: exp/2023-02-23/wikievents_bert_20230223164659/tensorboard
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - script_path: exp/2023-02-23/wikievents_bert_20230223164659/script
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - threshold: 0.4
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - max_desc_seq_len: 512
+2023-02-23 16:47:00,206 - config.py - 113 - INFO - tbWriter: <torch.utils.tensorboard.writer.SummaryWriter object at 0x7fde482e6970>
+2023-02-23 16:47:00,206 - config.py - 114 - INFO - ****************************
+2023-02-23 16:47:10,428 - train.py - 33 - INFO - load train set......
+2023-02-23 16:47:10,459 - train.py - 37 - INFO - load test set......
+2023-02-23 16:47:10,480 - basic_trainer.py - 179 - INFO - ******************** Epoch: 1/20 ***********************
+2023-02-23 16:47:11,053 - basic_trainer.py - 191 - INFO - step: 0/26, Train loss: 1423.83
+2023-02-23 16:47:11,931 - bertsum_trainer.py - 70 - INFO - Test loss: 335.65
+2023-02-23 16:47:11,932 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:11,933 - bertsum_trainer.py - 72 - INFO - Sent      - P:  45.02            , R: 100.00            , F:  62.09
+2023-02-23 16:47:11,933 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:11,933 - basic_trainer.py - 233 - INFO - step: 0/26, test acc: 0, Time usage: 0:00:01 [*]
+2023-02-23 16:47:18,575 - basic_trainer.py - 191 - INFO - step: 5/26, Train loss: 777.86
+2023-02-23 16:47:21,388 - basic_trainer.py - 191 - INFO - step: 10/26, Train loss: 1001.85
+2023-02-23 16:47:23,891 - basic_trainer.py - 191 - INFO - step: 15/26, Train loss: 1274.03
+2023-02-23 16:47:26,396 - basic_trainer.py - 191 - INFO - step: 20/26, Train loss: 926.89
+2023-02-23 16:47:28,801 - basic_trainer.py - 191 - INFO - step: 25/26, Train loss: 1167.29
+2023-02-23 16:47:29,671 - bertsum_trainer.py - 70 - INFO - Test loss: 304.61
+2023-02-23 16:47:29,672 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:29,673 - bertsum_trainer.py - 72 - INFO - Sent      - P:  46.07            , R:  81.73            , F:  58.93
+2023-02-23 16:47:29,673 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:29,673 - basic_trainer.py - 233 - INFO - step: 25/26, test acc: 0, Time usage: 0:00:19 
+2023-02-23 16:47:29,745 - basic_trainer.py - 179 - INFO - ******************** Epoch: 2/20 ***********************
+2023-02-23 16:47:32,271 - basic_trainer.py - 191 - INFO - step: 4/26, Train loss: 1213.58
+2023-02-23 16:47:34,771 - basic_trainer.py - 191 - INFO - step: 9/26, Train loss: 934.33
+2023-02-23 16:47:37,277 - basic_trainer.py - 191 - INFO - step: 14/26, Train loss: 1164.90
+2023-02-23 16:47:39,791 - basic_trainer.py - 191 - INFO - step: 19/26, Train loss: 735.72
+2023-02-23 16:47:42,312 - basic_trainer.py - 191 - INFO - step: 24/26, Train loss: 855.77
+2023-02-23 16:47:43,183 - bertsum_trainer.py - 70 - INFO - Test loss: 298.63
+2023-02-23 16:47:43,184 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:43,185 - bertsum_trainer.py - 72 - INFO - Sent      - P:  47.85            , R:  80.29            , F:  59.96
+2023-02-23 16:47:43,185 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:43,186 - basic_trainer.py - 233 - INFO - step: 24/26, test acc: 0, Time usage: 0:00:33 
+2023-02-23 16:47:43,647 - basic_trainer.py - 179 - INFO - ******************** Epoch: 3/20 ***********************
+2023-02-23 16:47:45,696 - basic_trainer.py - 191 - INFO - step: 3/26, Train loss: 892.19
+2023-02-23 16:47:48,220 - basic_trainer.py - 191 - INFO - step: 8/26, Train loss: 1016.08
+2023-02-23 16:47:50,752 - basic_trainer.py - 191 - INFO - step: 13/26, Train loss: 1172.16
+2023-02-23 16:47:53,264 - basic_trainer.py - 191 - INFO - step: 18/26, Train loss: 784.38
+2023-02-23 16:47:55,788 - basic_trainer.py - 191 - INFO - step: 23/26, Train loss: 994.76
+2023-02-23 16:47:56,652 - bertsum_trainer.py - 70 - INFO - Test loss: 305.02
+2023-02-23 16:47:56,653 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:56,653 - bertsum_trainer.py - 72 - INFO - Sent      - P:  50.74            , R:  33.17            , F:  40.12
+2023-02-23 16:47:56,653 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:47:56,654 - basic_trainer.py - 233 - INFO - step: 23/26, test acc: 0, Time usage: 0:00:46 
+2023-02-23 16:47:57,626 - basic_trainer.py - 179 - INFO - ******************** Epoch: 4/20 ***********************
+2023-02-23 16:47:59,158 - basic_trainer.py - 191 - INFO - step: 2/26, Train loss: 745.92
+2023-02-23 16:48:01,684 - basic_trainer.py - 191 - INFO - step: 7/26, Train loss: 658.85
+2023-02-23 16:48:04,200 - basic_trainer.py - 191 - INFO - step: 12/26, Train loss: 1038.39
+2023-02-23 16:48:06,710 - basic_trainer.py - 191 - INFO - step: 17/26, Train loss: 785.99
+2023-02-23 16:48:09,246 - basic_trainer.py - 191 - INFO - step: 22/26, Train loss: 930.24
+2023-02-23 16:48:10,135 - bertsum_trainer.py - 70 - INFO - Test loss: 299.62
+2023-02-23 16:48:10,136 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:10,136 - bertsum_trainer.py - 72 - INFO - Sent      - P:  48.00            , R:  75.00            , F:  58.54
+2023-02-23 16:48:10,136 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:10,137 - basic_trainer.py - 233 - INFO - step: 22/26, test acc: 0, Time usage: 0:01:00 
+2023-02-23 16:48:11,580 - basic_trainer.py - 179 - INFO - ******************** Epoch: 5/20 ***********************
+2023-02-23 16:48:12,612 - basic_trainer.py - 191 - INFO - step: 1/26, Train loss: 1045.29
+2023-02-23 16:48:15,128 - basic_trainer.py - 191 - INFO - step: 6/26, Train loss: 741.77
+2023-02-23 16:48:17,656 - basic_trainer.py - 191 - INFO - step: 11/26, Train loss: 976.51
+2023-02-23 16:48:20,180 - basic_trainer.py - 191 - INFO - step: 16/26, Train loss: 1002.08
+2023-02-23 16:48:22,717 - basic_trainer.py - 191 - INFO - step: 21/26, Train loss: 880.24
+2023-02-23 16:48:23,593 - bertsum_trainer.py - 70 - INFO - Test loss: 301.82
+2023-02-23 16:48:23,594 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:23,594 - bertsum_trainer.py - 72 - INFO - Sent      - P:  50.21            , R:  56.73            , F:  53.27
+2023-02-23 16:48:23,594 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:23,595 - basic_trainer.py - 233 - INFO - step: 21/26, test acc: 0, Time usage: 0:01:13 
+2023-02-23 16:48:25,579 - basic_trainer.py - 179 - INFO - ******************** Epoch: 6/20 ***********************
+2023-02-23 16:48:26,110 - basic_trainer.py - 191 - INFO - step: 0/26, Train loss: 559.57
+2023-02-23 16:48:28,653 - basic_trainer.py - 191 - INFO - step: 5/26, Train loss: 855.82
+2023-02-23 16:48:31,200 - basic_trainer.py - 191 - INFO - step: 10/26, Train loss: 767.75
+2023-02-23 16:48:33,744 - basic_trainer.py - 191 - INFO - step: 15/26, Train loss: 795.74
+2023-02-23 16:48:36,277 - basic_trainer.py - 191 - INFO - step: 20/26, Train loss: 1006.32
+2023-02-23 16:48:37,166 - bertsum_trainer.py - 70 - INFO - Test loss: 289.99
+2023-02-23 16:48:37,167 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:37,167 - bertsum_trainer.py - 72 - INFO - Sent      - P:  52.79            , R:  59.13            , F:  55.78
+2023-02-23 16:48:37,167 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:37,167 - basic_trainer.py - 233 - INFO - step: 20/26, test acc: 0, Time usage: 0:01:27 
+2023-02-23 16:48:39,540 - basic_trainer.py - 191 - INFO - step: 25/26, Train loss: 732.28
+2023-02-23 16:48:39,650 - basic_trainer.py - 179 - INFO - ******************** Epoch: 7/20 ***********************
+2023-02-23 16:48:42,196 - basic_trainer.py - 191 - INFO - step: 4/26, Train loss: 762.95
+2023-02-23 16:48:44,737 - basic_trainer.py - 191 - INFO - step: 9/26, Train loss: 946.83
+2023-02-23 16:48:47,292 - basic_trainer.py - 191 - INFO - step: 14/26, Train loss: 912.98
+2023-02-23 16:48:49,822 - basic_trainer.py - 191 - INFO - step: 19/26, Train loss: 792.22
+2023-02-23 16:48:50,711 - bertsum_trainer.py - 70 - INFO - Test loss: 301.64
+2023-02-23 16:48:50,712 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:50,712 - bertsum_trainer.py - 72 - INFO - Sent      - P:  47.43            , R:  57.69            , F:  52.06
+2023-02-23 16:48:50,713 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:48:50,713 - basic_trainer.py - 233 - INFO - step: 19/26, test acc: 0, Time usage: 0:01:40 
+2023-02-23 16:48:53,187 - basic_trainer.py - 191 - INFO - step: 24/26, Train loss: 671.21
+2023-02-23 16:48:53,695 - basic_trainer.py - 179 - INFO - ******************** Epoch: 8/20 ***********************
+2023-02-23 16:48:55,736 - basic_trainer.py - 191 - INFO - step: 3/26, Train loss: 862.67
+2023-02-23 16:48:58,284 - basic_trainer.py - 191 - INFO - step: 8/26, Train loss: 865.79
+2023-02-23 16:49:00,823 - basic_trainer.py - 191 - INFO - step: 13/26, Train loss: 771.80
+2023-02-23 16:49:03,352 - basic_trainer.py - 191 - INFO - step: 18/26, Train loss: 904.04
+2023-02-23 16:49:04,223 - bertsum_trainer.py - 70 - INFO - Test loss: 292.60
+2023-02-23 16:49:04,225 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:04,225 - bertsum_trainer.py - 72 - INFO - Sent      - P:  54.15            , R:  53.37            , F:  53.75
+2023-02-23 16:49:04,225 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:04,225 - basic_trainer.py - 233 - INFO - step: 18/26, test acc: 0, Time usage: 0:01:54 
+2023-02-23 16:49:06,719 - basic_trainer.py - 191 - INFO - step: 23/26, Train loss: 619.10
+2023-02-23 16:49:07,756 - basic_trainer.py - 179 - INFO - ******************** Epoch: 9/20 ***********************
+2023-02-23 16:49:09,295 - basic_trainer.py - 191 - INFO - step: 2/26, Train loss: 560.46
+2023-02-23 16:49:11,824 - basic_trainer.py - 191 - INFO - step: 7/26, Train loss: 790.71
+2023-02-23 16:49:14,367 - basic_trainer.py - 191 - INFO - step: 12/26, Train loss: 705.06
+2023-02-23 16:49:16,912 - basic_trainer.py - 191 - INFO - step: 17/26, Train loss: 869.11
+2023-02-23 16:49:17,762 - bertsum_trainer.py - 70 - INFO - Test loss: 292.82
+2023-02-23 16:49:17,764 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:17,764 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.11            , R:  69.71            , F:  60.29
+2023-02-23 16:49:17,764 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:17,765 - basic_trainer.py - 233 - INFO - step: 17/26, test acc: 0.6307234432234432, Time usage: 0:02:07 [*]
+2023-02-23 16:49:27,031 - basic_trainer.py - 191 - INFO - step: 22/26, Train loss: 859.81
+2023-02-23 16:49:28,570 - basic_trainer.py - 179 - INFO - ******************** Epoch: 10/20 ***********************
+2023-02-23 16:49:29,606 - basic_trainer.py - 191 - INFO - step: 1/26, Train loss: 818.55
+2023-02-23 16:49:32,150 - basic_trainer.py - 191 - INFO - step: 6/26, Train loss: 772.83
+2023-02-23 16:49:34,702 - basic_trainer.py - 191 - INFO - step: 11/26, Train loss: 886.46
+2023-02-23 16:49:37,261 - basic_trainer.py - 191 - INFO - step: 16/26, Train loss: 569.36
+2023-02-23 16:49:38,142 - bertsum_trainer.py - 70 - INFO - Test loss: 300.70
+2023-02-23 16:49:38,143 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:38,144 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.28            , R:  58.65            , F:  55.84
+2023-02-23 16:49:38,144 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:38,144 - basic_trainer.py - 233 - INFO - step: 16/26, test acc: 0, Time usage: 0:02:28 
+2023-02-23 16:49:40,641 - basic_trainer.py - 191 - INFO - step: 21/26, Train loss: 632.54
+2023-02-23 16:49:42,690 - basic_trainer.py - 179 - INFO - ******************** Epoch: 11/20 ***********************
+2023-02-23 16:49:43,217 - basic_trainer.py - 191 - INFO - step: 0/26, Train loss: 741.41
+2023-02-23 16:49:45,758 - basic_trainer.py - 191 - INFO - step: 5/26, Train loss: 646.14
+2023-02-23 16:49:48,327 - basic_trainer.py - 191 - INFO - step: 10/26, Train loss: 784.97
+2023-02-23 16:49:50,876 - basic_trainer.py - 191 - INFO - step: 15/26, Train loss: 594.93
+2023-02-23 16:49:51,727 - bertsum_trainer.py - 70 - INFO - Test loss: 316.92
+2023-02-23 16:49:51,728 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:51,728 - bertsum_trainer.py - 72 - INFO - Sent      - P:  57.69            , R:  57.69            , F:  57.69
+2023-02-23 16:49:51,729 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:49:51,729 - basic_trainer.py - 233 - INFO - step: 15/26, test acc: 0, Time usage: 0:02:41 
+2023-02-23 16:49:54,231 - basic_trainer.py - 191 - INFO - step: 20/26, Train loss: 641.24
+2023-02-23 16:49:56,657 - basic_trainer.py - 191 - INFO - step: 25/26, Train loss: 765.22
+2023-02-23 16:49:56,777 - basic_trainer.py - 179 - INFO - ******************** Epoch: 12/20 ***********************
+2023-02-23 16:49:59,338 - basic_trainer.py - 191 - INFO - step: 4/26, Train loss: 569.07
+2023-02-23 16:50:01,899 - basic_trainer.py - 191 - INFO - step: 9/26, Train loss: 723.14
+2023-02-23 16:50:04,427 - basic_trainer.py - 191 - INFO - step: 14/26, Train loss: 508.09
+2023-02-23 16:50:05,316 - bertsum_trainer.py - 70 - INFO - Test loss: 331.91
+2023-02-23 16:50:05,317 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:05,318 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.18            , R:  68.27            , F:  59.79
+2023-02-23 16:50:05,318 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:05,318 - basic_trainer.py - 233 - INFO - step: 14/26, test acc: 0.6223494670123884, Time usage: 0:02:55 
+2023-02-23 16:50:07,801 - basic_trainer.py - 191 - INFO - step: 19/26, Train loss: 535.02
+2023-02-23 16:50:10,336 - basic_trainer.py - 191 - INFO - step: 24/26, Train loss: 775.99
+2023-02-23 16:50:10,856 - basic_trainer.py - 179 - INFO - ******************** Epoch: 13/20 ***********************
+2023-02-23 16:50:12,905 - basic_trainer.py - 191 - INFO - step: 3/26, Train loss: 552.86
+2023-02-23 16:50:15,455 - basic_trainer.py - 191 - INFO - step: 8/26, Train loss: 355.44
+2023-02-23 16:50:17,984 - basic_trainer.py - 191 - INFO - step: 13/26, Train loss: 591.08
+2023-02-23 16:50:18,860 - bertsum_trainer.py - 70 - INFO - Test loss: 333.28
+2023-02-23 16:50:18,861 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:18,861 - bertsum_trainer.py - 72 - INFO - Sent      - P:  55.14            , R:  64.42            , F:  59.42
+2023-02-23 16:50:18,861 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:18,862 - basic_trainer.py - 233 - INFO - step: 13/26, test acc: 0.6071145932257044, Time usage: 0:03:08 
+2023-02-23 16:50:21,372 - basic_trainer.py - 191 - INFO - step: 18/26, Train loss: 581.51
+2023-02-23 16:50:23,927 - basic_trainer.py - 191 - INFO - step: 23/26, Train loss: 775.18
+2023-02-23 16:50:24,970 - basic_trainer.py - 179 - INFO - ******************** Epoch: 14/20 ***********************
+2023-02-23 16:50:26,532 - basic_trainer.py - 191 - INFO - step: 2/26, Train loss: 609.06
+2023-02-23 16:50:29,084 - basic_trainer.py - 191 - INFO - step: 7/26, Train loss: 482.81
+2023-02-23 16:50:31,604 - basic_trainer.py - 191 - INFO - step: 12/26, Train loss: 401.55
+2023-02-23 16:50:32,455 - bertsum_trainer.py - 70 - INFO - Test loss: 346.23
+2023-02-23 16:50:32,456 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:32,457 - bertsum_trainer.py - 72 - INFO - Sent      - P:  52.42            , R:  67.79            , F:  59.12
+2023-02-23 16:50:32,457 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:32,457 - basic_trainer.py - 233 - INFO - step: 12/26, test acc: 0.616396196740063, Time usage: 0:03:22 
+2023-02-23 16:50:34,956 - basic_trainer.py - 191 - INFO - step: 17/26, Train loss: 768.52
+2023-02-23 16:50:37,507 - basic_trainer.py - 191 - INFO - step: 22/26, Train loss: 607.51
+2023-02-23 16:50:39,032 - basic_trainer.py - 179 - INFO - ******************** Epoch: 15/20 ***********************
+2023-02-23 16:50:40,060 - basic_trainer.py - 191 - INFO - step: 1/26, Train loss: 318.29
+2023-02-23 16:50:42,611 - basic_trainer.py - 191 - INFO - step: 6/26, Train loss: 650.58
+2023-02-23 16:50:45,155 - basic_trainer.py - 191 - INFO - step: 11/26, Train loss: 499.85
+2023-02-23 16:50:46,052 - bertsum_trainer.py - 70 - INFO - Test loss: 375.37
+2023-02-23 16:50:46,053 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:46,053 - bertsum_trainer.py - 72 - INFO - Sent      - P:  54.81            , R:  62.98            , F:  58.61
+2023-02-23 16:50:46,054 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:46,054 - basic_trainer.py - 233 - INFO - step: 11/26, test acc: 0.5971314773093016, Time usage: 0:03:36 
+2023-02-23 16:50:48,548 - basic_trainer.py - 191 - INFO - step: 16/26, Train loss: 406.06
+2023-02-23 16:50:51,107 - basic_trainer.py - 191 - INFO - step: 21/26, Train loss: 478.29
+2023-02-23 16:50:53,148 - basic_trainer.py - 179 - INFO - ******************** Epoch: 16/20 ***********************
+2023-02-23 16:50:53,675 - basic_trainer.py - 191 - INFO - step: 0/26, Train loss: 405.07
+2023-02-23 16:50:56,237 - basic_trainer.py - 191 - INFO - step: 5/26, Train loss: 478.43
+2023-02-23 16:50:58,809 - basic_trainer.py - 191 - INFO - step: 10/26, Train loss: 497.17
+2023-02-23 16:50:59,685 - bertsum_trainer.py - 70 - INFO - Test loss: 393.19
+2023-02-23 16:50:59,687 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:59,687 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.18            , R:  68.27            , F:  59.79
+2023-02-23 16:50:59,687 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:50:59,688 - basic_trainer.py - 233 - INFO - step: 10/26, test acc: 0.6223494670123884, Time usage: 0:03:49 
+2023-02-23 16:51:02,196 - basic_trainer.py - 191 - INFO - step: 15/26, Train loss: 360.36
+2023-02-23 16:51:04,736 - basic_trainer.py - 191 - INFO - step: 20/26, Train loss: 462.41
+2023-02-23 16:51:07,199 - basic_trainer.py - 191 - INFO - step: 25/26, Train loss: 356.02
+2023-02-23 16:51:07,320 - basic_trainer.py - 179 - INFO - ******************** Epoch: 17/20 ***********************
+2023-02-23 16:51:09,896 - basic_trainer.py - 191 - INFO - step: 4/26, Train loss: 381.42
+2023-02-23 16:51:12,455 - basic_trainer.py - 191 - INFO - step: 9/26, Train loss: 439.58
+2023-02-23 16:51:13,316 - bertsum_trainer.py - 70 - INFO - Test loss: 417.23
+2023-02-23 16:51:13,317 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:13,317 - bertsum_trainer.py - 72 - INFO - Sent      - P:  56.11            , R:  59.62            , F:  57.81
+2023-02-23 16:51:13,317 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:13,318 - basic_trainer.py - 233 - INFO - step: 9/26, test acc: 0, Time usage: 0:04:03 
+2023-02-23 16:51:15,825 - basic_trainer.py - 191 - INFO - step: 14/26, Train loss: 482.27
+2023-02-23 16:51:18,374 - basic_trainer.py - 191 - INFO - step: 19/26, Train loss: 328.82
+2023-02-23 16:51:20,936 - basic_trainer.py - 191 - INFO - step: 24/26, Train loss: 389.68
+2023-02-23 16:51:21,482 - basic_trainer.py - 179 - INFO - ******************** Epoch: 18/20 ***********************
+2023-02-23 16:51:23,552 - basic_trainer.py - 191 - INFO - step: 3/26, Train loss: 317.00
+2023-02-23 16:51:26,100 - basic_trainer.py - 191 - INFO - step: 8/26, Train loss: 425.50
+2023-02-23 16:51:26,965 - bertsum_trainer.py - 70 - INFO - Test loss: 394.84
+2023-02-23 16:51:26,966 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:26,967 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.75            , R:  65.38            , F:  59.00
+2023-02-23 16:51:26,967 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:26,968 - basic_trainer.py - 233 - INFO - step: 8/26, test acc: 0.6073274551535421, Time usage: 0:04:16 
+2023-02-23 16:51:29,450 - basic_trainer.py - 191 - INFO - step: 13/26, Train loss: 301.34
+2023-02-23 16:51:32,008 - basic_trainer.py - 191 - INFO - step: 18/26, Train loss: 438.52
+2023-02-23 16:51:34,568 - basic_trainer.py - 191 - INFO - step: 23/26, Train loss: 357.52
+2023-02-23 16:51:35,591 - basic_trainer.py - 179 - INFO - ******************** Epoch: 19/20 ***********************
+2023-02-23 16:51:37,131 - basic_trainer.py - 191 - INFO - step: 2/26, Train loss: 414.58
+2023-02-23 16:51:39,693 - basic_trainer.py - 191 - INFO - step: 7/26, Train loss: 383.70
+2023-02-23 16:51:40,630 - bertsum_trainer.py - 70 - INFO - Test loss: 415.71
+2023-02-23 16:51:40,631 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:40,632 - bertsum_trainer.py - 72 - INFO - Sent      - P:  55.20            , R:  66.35            , F:  60.26
+2023-02-23 16:51:40,632 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:40,632 - basic_trainer.py - 233 - INFO - step: 7/26, test acc: 0.6188769230769231, Time usage: 0:04:30 
+2023-02-23 16:51:43,135 - basic_trainer.py - 191 - INFO - step: 12/26, Train loss: 310.60
+2023-02-23 16:51:45,697 - basic_trainer.py - 191 - INFO - step: 17/26, Train loss: 394.88
+2023-02-23 16:51:48,220 - basic_trainer.py - 191 - INFO - step: 22/26, Train loss: 349.42
+2023-02-23 16:51:49,745 - basic_trainer.py - 179 - INFO - ******************** Epoch: 20/20 ***********************
+2023-02-23 16:51:50,772 - basic_trainer.py - 191 - INFO - step: 1/26, Train loss: 315.32
+2023-02-23 16:51:53,320 - basic_trainer.py - 191 - INFO - step: 6/26, Train loss: 455.80
+2023-02-23 16:51:54,195 - bertsum_trainer.py - 70 - INFO - Test loss: 430.72
+2023-02-23 16:51:54,196 - bertsum_trainer.py - 71 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:54,196 - bertsum_trainer.py - 72 - INFO - Sent      - P:  53.39            , R:  64.42            , F:  58.39
+2023-02-23 16:51:54,196 - bertsum_trainer.py - 74 - INFO - ---------------------------------------------------------------------
+2023-02-23 16:51:54,197 - basic_trainer.py - 233 - INFO - step: 6/26, test acc: 0.6000842782715292, Time usage: 0:04:44 
+2023-02-23 16:51:56,696 - basic_trainer.py - 191 - INFO - step: 11/26, Train loss: 483.89
+2023-02-23 16:51:59,243 - basic_trainer.py - 191 - INFO - step: 16/26, Train loss: 231.35
+2023-02-23 16:52:01,796 - basic_trainer.py - 191 - INFO - step: 21/26, Train loss: 349.26
+2023-02-23 16:52:03,869 - basic_trainer.py - 214 - INFO - ******FINISH TRAINING******

@@ -1,0 +1,40 @@
+{
+    "exp_purpose": "bert_sum",
+    "model": "bert",
+    "dataset": "rams",
+    "train_path": "data/rams/add_sum/train.bert.pt",
+    "dev_path": "data/rams/add_sum/dev.bert.pt",
+    "test_path": "data/rams/add_sum/test.bert.pt",
+    "raw_path" :"data/rams/add_sum/",
+    "event_path": "",
+    "save_path": "./exp/",
+    "project_path": "./",
+    "save_scriptList": [
+        "main",
+        "utils",
+        "models",
+        "trainer",
+        "configs"
+    ],
+
+    "do_train": true,
+    "do_test": false,
+    "require_improvement": 200000000,
+    "num_epochs": 20,
+    "batch_size": 32,
+    "test_batch_size": 1,
+    "max_seq_len": 512,
+    "max_desc_seq_len": 512,
+    "eval_step": 100,
+    "log_step": 20,
+    "basic_learning_rate": 1e-4,
+    "encoder_learning_rate": 3e-5,
+    "pretrain_path": "bert-large-uncased",
+    "hidden_size": 1024,
+    "rate_warmup_steps": 0.1,
+    "shuffle": true,
+    "drop_last": true,
+    "num_workers": 4,
+    "threshold" : 0.4
+
+}

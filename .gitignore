@@ -1,0 +1,7 @@
+.vscode
+*.pth
+*.out
+__pycache__
+script
+tensorboard
+test*
