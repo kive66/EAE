@@ -48,7 +48,6 @@ class DecoderTrainer(TrainerBasic):
         # 先存loss
         super().update_log_cache(log_cache, data, loss, model_output)
         
-        
         pred_args = model_output.transpose(0,1) # [batch_size* role_num * seq_len]
         pred_args = self.vec2span(pred_args, data[-3])
         true_args = data[-4] # [batch_size* arg]
@@ -68,25 +67,29 @@ class DecoderTrainer(TrainerBasic):
             tag+'_loss': np.array(log_cache['loss']).mean()
         }
         self.config.tbWriter.add_scalars('loss', dict_loss, global_step=self.total_batch)
-
-        # 计算评估指标
-        metric_score = calculate(log_cache['pred_args'], log_cache['true_args'], log_cache['role_names'])
         
         sent = {
-            'f1': metric_score['f_c'],
-            'precision': metric_score['p_c'],
-            'recall': metric_score['f_c']
-        }
-        self.config.tbWriter.add_scalars(
-            'sent', sent, global_step=self.total_batch)
-
+                'f1': 0,
+                'precision': 0,
+                'recall': 0
+            }
+        
+        # 计算评估指标
         if tag != 'train':
+            metric_score = calculate(self.config, log_cache['pred_args'], log_cache['true_args'], log_cache['role_names'])
+            
+            sent['f1'] = metric_score['f_c']
+            sent['precision'] = metric_score['p_c']
+            sent['recall'] = metric_score['f_c']
+
+            self.config.tbWriter.add_scalars(
+                'sent', sent, global_step=self.total_batch)
             self.config.logger.info('Test loss: {:.2f}'.format(np.array(log_cache['loss']).mean()))
             self.config.logger.info("---------------------------------------------------------------------")
             self.config.logger.info('Arg      - P: {:6.2f}            , R: {:6.2f}            , F: {:6.2f}'.format(
                     sent['precision'] * 100.0,sent['recall'] * 100.0,  sent['f1'] * 100.0))
             self.config.logger.info("---------------------------------------------------------------------")
-            # self.write_rams_result(log_cache['role_names'], log_cache['true_args'], log_cache['pred_args'])
+            self.write_rams_result(log_cache['role_names'], log_cache['true_args'], log_cache['pred_args'])
 
         # 清空 cache
         log_cache_init = self.init_log_cache()
@@ -112,13 +115,13 @@ class DecoderTrainer(TrainerBasic):
             for j, role in enumerate(roles):
                 true_arg_span = true_arg[j]
                 pred_arg_span = pred_arg[j]
-                true_arg_word = []
-                pred_arg_word = []
+                true_arg_word = set()
+                pred_arg_word = set()
                 for span in true_arg_span:
-                    true_arg_word.append(text[span[0]:span[1]])
+                    true_arg_word.update(text[span[0]:span[1]])
                 for span in pred_arg_span:
-                    pred_arg_word.append(text[span[0]:span[1]])   
-                role_with_span[role] = {'true': true_arg_word, 'pred': pred_arg_word}
+                    pred_arg_word.update(text[span[0]:span[1]])   
+                role_with_span[role] = {'true': list(true_arg_word), 'pred': list(pred_arg_word)}
                 # true_arg_idx = [idx for idx, k in enumerate(true_arg[j]) if k>0]
                 # pred_arg_idx = [idx for idx, k in enumerate(pred_arg[j]) if k>0]
                 # true[role] = [[idx, text[idx]] for idx in true_arg_idx]

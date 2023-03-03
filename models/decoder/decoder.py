@@ -35,7 +35,7 @@ class Decoder(nn.Module):
         best_ids = self.get_best_pred(forward_ids, backward_ids)
         total_loss = forward_loss + backward_loss
         
-        return total_loss, best_ids
+        return total_loss.mean(), best_ids
     
 
     def get_best_pred(self, forward_ids, backward_ids):

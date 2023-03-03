@@ -51,6 +51,11 @@ class RoleDecoder(nn.Module):
             role_embedding = bert(role_id, role_mask)[0]
             
             # summar + role + candi_answer + pre_answer
+            # print(summar_embedding.shape)
+            # print(role_embedding.shape)
+            # print(token_embedding.shape)
+            # print(pre_answer.shape)
+            
             single_word_embedding = self.single_linear(torch.cat((summar_embedding, role_embedding, token_embedding, pre_answer), dim=-1))
             multi_word_embedding = self.multi_linear(torch.cat((summar_embedding, role_embedding, entities_embedding, pre_answer), dim=-1))
             
@@ -65,7 +70,7 @@ class RoleDecoder(nn.Module):
             loss = (loss*token_mask.float()).sum()
             total_loss += loss
             
-        return total_loss, torch.stack(pred_arg_ids)
+        return total_loss.mean(), torch.stack(pred_arg_ids)
     
     
     def arg_map(self,single_word_pred, multi_word_pred, entity_spans, char2token, span2entity):
@@ -93,7 +98,7 @@ class RoleDecoder(nn.Module):
                 #     pred_arg_span.add([j,j+1])
             
             # 映射span
-            for j in range(len(span2entity)):
+            for j in range(len(span2entity[i])):
                 s2e = span2entity[i][j] # batch i entity j    
                 entity = entity_spans[i][j] # batch i entity j   
                 char_scores = [] # entity编码中 一个 entity 每个 char 的score

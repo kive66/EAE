@@ -1,20 +1,27 @@
 from typing import DefaultDict
+from utils.json_utils import load_json
 import torch
 
-def calculate(pred_label_idx, true_label_idx, slot_types):
+def calculate(config, pred_label_idx, true_label_idx, slot_types):
+    docs = load_json(config.test_path)
     # 首先，根据slot_type分组
     true_positive_c = 0
     true_positive_i = 0
     pred_positive_c, gold_positive_c = 0, 0
     pred_positive_i, gold_positive_i = 0, 0
     for i in range(len(pred_label_idx)):
+        sentences = docs[i]['sentences']
+        text = []
+        role_with_span = {}
+        for sent in sentences:
+            text.extend(sent)
         slot_type = [slot for slot in slot_types[i] if slot != '']
         slot_len = len(slot_type)
         # 去掉不计算的slot指标（padding的）
         cur_gold_label_idx = true_label_idx[i][:slot_len]
         cur_pred_label_idx = pred_label_idx[i][:slot_len]
-        gold_ai_data, gold_ac_data = gen_tuples(slot_type, cur_gold_label_idx)
-        pred_ai_data, pred_ac_data = gen_tuples(slot_type, cur_pred_label_idx)
+        gold_ai_data, gold_ac_data = gen_tuples(text, slot_type, cur_gold_label_idx)
+        pred_ai_data, pred_ac_data = gen_tuples(text, slot_type, cur_pred_label_idx)
         
         pred_positive_c += len(pred_ac_data)
         gold_positive_c += len(gold_ac_data)
@@ -55,13 +62,13 @@ def count_tp(y_gold, y_pred):
     return true_positive
 
 
-def gen_tuples(roles, data):
-    ai_data = []
-    ac_data = []
+def gen_tuples(text, roles, data):
+    ai_data = set()
+    ac_data = set()
     for i, role in enumerate(roles):
         for arg_span in data[i]:
-            ai_one = (arg_span[0], arg_span[1])
-            ac_one = (arg_span[0], arg_span[1], role)
-            ai_data.append(ai_one)
-            ac_data.append(ac_one)
-    return ai_data, ac_data
+            ai_one = (' '.join(text[arg_span[0]: arg_span[1]]))
+            ac_one = (' '.join(text[arg_span[0]: arg_span[1]]), role)
+            ai_data.add(ai_one)
+            ac_data.add(ac_one)
+    return list(ai_data), list(ac_data)

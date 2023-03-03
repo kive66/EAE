@@ -9,29 +9,30 @@ class DecoderLoader():
     def __init__(self, config:Config):
         self.config = config
 
-    def create_dataset(self,local_rank, dataset_type):
-        dataset = Rams(self.config,local_rank, dataset_type)
+    def create_dataset(self, dataset_type):
+        dataset = Rams(self.config, dataset_type)
         return dataset
 
     def create_sampler(self, dataset):
-        sampler = torch.utils.data.distributed.DistributedSampler(dataset)
+        # sampler = torch.utils.data.distributed.DistributedSampler(dataset)
+        sampler = torch.utils.data.RandomSampler(dataset)
         return sampler
         
 
-    def create_dataloader(self, dataset, sampler, local_rank, dataset_type='train'):
-        print(dataset_type, local_rank)
-        if local_rank not in [-1, 0]:
-            torch.distributed.barrier()
+    def create_dataloader(self, dataset, sampler, dataset_type='train'):
+        # if local_rank not in [-1, 0]:
+        #     torch.distributed.barrier()
         dataloader = DataLoader(
             dataset = dataset,
             batch_size = self.config.batch_size if dataset_type != 'test' else self.config.test_batch_size,
-            sampler = sampler,
+            # sampler = sampler,
+            shuffle = self.config.shuffle if dataset_type != 'test' else False,
             drop_last = self.config.drop_last if dataset_type == 'train' else False,
             collate_fn = lambda data: self.collate_fn_events(data, self.config),
             num_workers = 1
         )
-        if local_rank == 0:
-            torch.distributed.barrier()
+        # if local_rank == 0:
+        #     torch.distributed.barrier()
         return dataloader
     
     @staticmethod
@@ -163,10 +164,10 @@ class DecoderLoader():
             
 
 class Rams(Dataset):
-    def __init__(self, config, local_rank, dataset_type: str) -> None:
+    def __init__(self, config, dataset_type: str) -> None:
         super().__init__()
         self.config = config
-        self.list_datas = self.load_dataset(local_rank, dataset_type)
+        self.list_datas = self.load_dataset(dataset_type)
 
     def get_path(self,dataset_type:str):
         if dataset_type == 'train':
@@ -190,12 +191,14 @@ class Rams(Dataset):
         return event_dict
             
     
-    def load_dataset(self, local_rank, dataset_type)->list:
+    def load_dataset(self, dataset_type)->list:
        
         path = self.get_path(dataset_type)
         dataset = load_json(path)
         event_role_dict = self.load_event_dict(self.config.event_path)
         data = []
+        # if dataset_type == 'train':
+        #     dataset = dataset[1700:]
         for doc in dataset:
             doc_key = doc['doc_key']
             evt_triggers = doc['evt_triggers']
