@@ -15,12 +15,17 @@ class SummarEncoder(nn.Module):
             summar: t5摘要
             bertsum: bertsum摘要
         '''
-        summar_embedding = bert(summar_ids, summar_mask)
-        bertsum_embedding = bert(bertsum_ids, bertsum_mask)
-        avg_summar = self.get_last_k_hidden(summar_embedding[2]) # [batch * hidden_size]
-        avg_bertsum = self.get_last_k_hidden(bertsum_embedding[2]) # [batch * hidden_size]
-        summar_embedding = self.gate(avg_summar, avg_bertsum)
-        return summar_embedding
+        summar_role_embeddings = []
+        for i in range(self.config.max_role_num):
+            summar_embedding = bert(summar_ids[i], summar_mask[i])
+            bertsum_embedding = bert(bertsum_ids[i], bertsum_mask[i])
+            
+            avg_summar = self.get_last_k_hidden(summar_embedding[2]) # [batch * hidden_size]
+            avg_bertsum = self.get_last_k_hidden(bertsum_embedding[2]) # [batch * hidden_size]
+
+            summar_embedding = self.gate(avg_summar, avg_bertsum)
+            summar_role_embeddings.append(summar_embedding)
+        return torch.stack(summar_role_embeddings).to(self.config.device)
     
     def get_last_k_hidden(self, hidden_layer, k=3):
         tmp = 0

@@ -5,4 +5,4 @@ __pycache__
 script
 tensorboard
 exp
-data/
+data

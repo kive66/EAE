@@ -48,7 +48,7 @@ class DecoderLoader():
         entities = []
         entity_spans = []
         char2token = []
-        span2entity = []
+        entity2token = []
         
         for ex in data:
             tokens.append(ex['tokens'])
@@ -67,45 +67,14 @@ class DecoderLoader():
             truncation=True,
             is_split_into_words=True,
             # return_token_type_ids=True,
-            return_offsets_mapping = True,
+            # return_offsets_mapping = True,
             return_tensors="pt"
         )
         # 生成原始句子到分词句子的词映射
-        for i, offset in enumerate(sent_tokens['offset_mapping']):
-            c2t = []
-            start, end =1, 1
-            while end < len(offset):
-                if offset[end][0]==0 and offset[end][1]==0:
-                    break
-                if offset[end][1]> offset[end+1][0]:
-                    c2t.append([start,end+1])
-                    end += 1
-                    start = end
-                else:
-                    end+=1
-            # if len(c2t) != len(tokens[i]):
-            #     print('wrong')
-            char2token.append(c2t)
-        # 摘要向量化
-        summarization:BatchEncoding = config.tokenizer(
-            summarization,
-            padding="max_length",
-            max_length=config.max_seq_len,
-            truncation=True,
-            # return_token_type_ids=True,
-            # return_offsets_mapping = True,
-            return_tensors="pt"
-        )
-        # 摘要向量化
-        bertsum:BatchEncoding = config.tokenizer(
-            bertsum,
-            padding="max_length",
-            max_length=config.max_seq_len,
-            truncation=True,
-            # return_token_type_ids=True,
-            # return_offsets_mapping = True,
-            return_tensors="pt"
-        )
+        for i in range(len(data)):
+            a = sent_tokens.word_ids(i)
+            char2token.append(sent_tokens.word_ids(i))
+       
         # 实体相连的向量化 
         entities:BatchEncoding = config.tokenizer(
             entities,
@@ -117,54 +86,69 @@ class DecoderLoader():
             return_offsets_mapping = True,
             return_tensors="pt"
         )
-        for i, offset in enumerate(entities['offset_mapping']):
-            s2e = [] # entity[i] : char[a : b] : token[c : d]
-            c2t =[] # char[i]: token[a : b]
-            start, end =1, 1
-            entity_span = entity_spans[i]
-            # 计算entity向量化后token->char的映射
-            while end < len(offset):
-                if offset[end][0]==0 and offset[end][1]==0:
-                    break
-                if offset[end][1]> offset[end+1][0]:
-                    c2t.append([start,end+1])
-                    end += 1
-                    start = end
-                else:
-                    end+=1
-            # 计算entity在char上的分隔
-            p = 0
-            for entity in entity_span:
-                span_len = entity[0][1] - entity[0][0]
-                if p+span_len > len(c2t):
-                    break
-                s2e.append(c2t[p:p+span_len])
-                p+=span_len
-            span2entity.append(s2e)
-                                 
-        for roles in role_names:
-            tokenized_role:BatchEncoding = config.tokenizer(
-                roles,
-                padding="max_length",
-                max_length=config.max_seq_len,
-                truncation=True,
-                # return_token_type_ids=True,
-                # return_offsets_mapping = True,
-                return_tensors="pt"
-            )
-            role_ids.append(tokenized_role.input_ids)
-            role_mask.append(tokenized_role.attention_mask)
-        role_ids = torch.stack(role_ids).transpose(0,1)
-        role_mask = torch.stack(role_mask).transpose(0,1)
-        # role_names = torch.tensor(role_names)
+        # 生成原始句子到分词句子的实体映射
+        for i in range(len(data)):
+            a = entities.word_ids(i)
+            entity2token.append(entities.word_ids(i))
+            
+        #与论元角色共同编码    
+        summar_embeddings = []                 
+        bertsum_embeddings = []
+        
+        summar_masks = []
+        bertsum_masks = []
+        for i, roles in enumerate(role_names):
+            summar_role_embedding = []
+            bertsum_role_embedding = []
+            
+            summar_role_mask = []
+            bertsum_role_mask = []
+            for role in roles:
+             # 摘要向量化
+                summar_embedding:BatchEncoding = config.tokenizer(
+                    summarization[i],
+                    role,
+                    padding="max_length",
+                    max_length=config.max_seq_len,
+                    truncation='only_first',
+                    # return_token_type_ids=True,
+                    # return_offsets_mapping = True,
+                    return_tensors="pt"
+                )
+                summar_role_embedding.extend(summar_embedding.input_ids)
+                summar_role_mask.extend(summar_embedding.attention_mask)
+                # 摘要向量化
+                bertsum_embedding:BatchEncoding = config.tokenizer(
+                    bertsum[i],
+                    role,
+                    padding="max_length",
+                    max_length=config.max_seq_len,
+                    truncation='only_first',
+                    # return_token_type_ids=True,
+                    # return_offsets_mapping = True,
+                    return_tensors="pt"
+                )
+                bertsum_role_embedding.extend(bertsum_embedding.input_ids)
+                bertsum_role_mask.extend(bertsum_embedding.attention_mask)
+                
+            summar_embeddings.append(torch.stack(summar_role_embedding))
+            bertsum_embeddings.append(torch.stack(bertsum_role_embedding))
+            
+            summar_masks.append(torch.stack(summar_role_mask))
+            bertsum_masks.append(torch.stack(bertsum_role_mask))
+            
+        summar_embeddings = torch.stack(summar_embeddings).transpose(0,1)
+        bertsum_embeddings = torch.stack(bertsum_embeddings).transpose(0,1)
+        
+        summar_masks = torch.stack(summar_masks).transpose(0,1)
+        bertsum_masks = torch.stack(bertsum_masks).transpose(0,1)
+        
         role_labels = torch.tensor(role_labels, dtype=torch.float).transpose(0,1)
-        # entity_span = torch.tensor(entity_span)
-        # char2token = torch.tensor(char2token)
-        return sent_tokens.input_ids, summarization.input_ids, bertsum.input_ids, entities.input_ids, role_ids, sent_tokens.attention_mask, summarization.attention_mask, bertsum.attention_mask, entities.attention_mask, role_mask, role_names, role_labels, role_spans, entity_spans, char2token, span2entity
+        return sent_tokens.input_ids, entities.input_ids, summar_embeddings, bertsum_embeddings, sent_tokens.attention_mask, entities.attention_mask, summar_masks, bertsum_masks, role_names, role_labels, role_spans, entity_spans, char2token, entity2token
             
 
 class Rams(Dataset):
-    def __init__(self, config, dataset_type: str) -> None:
+    def __init__(self, config:Config, dataset_type: str) -> None:
         super().__init__()
         self.config = config
         self.list_datas = self.load_dataset(dataset_type)
@@ -240,10 +224,11 @@ class Rams(Dataset):
                 if isinstance(entity[0][0],str):
                     entities.extend([entity[0][0]])
                 else:
-                    entities.extend(entity[0][0])
+                    entities.append(' '.join(entity[0][0]))
                 multi_span = []
                 for span in entity:
-                    multi_span.append((span[-2],span[-1]+1))
+                    if span[-1]+1 <= self.config.max_seq_len:
+                        multi_span.append((span[-2],span[-1]+1))
                 entity_span.append(multi_span)
                     
             data.append({'tokens':text, 'roles': roles, 'role_labels': role_labels, 'role_spans': role_spans, 'summarization': summar, 'bertsum': bertsum, 'entities': entities, 'entity_span': entity_span})

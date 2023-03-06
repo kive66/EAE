@@ -9,13 +9,14 @@ from typing import Dict, Tuple
 from utils.evaluate_utils import calculate
 from utils.json_utils import load_json, write_json
 from sklearn.metrics import f1_score, precision_score, recall_score
+from torchviz import make_dot
 
 class DecoderTrainer(TrainerBasic):
     def __init__(self, config: Config, model: nn.Module, train_dataloader: DataLoader, test_dataloader: DataLoader, dev_dataloader: DataLoader = None, evaluator: EvaluatorBasic = None) -> None:
         super().__init__(config, model, train_dataloader, test_dataloader, dev_dataloader, evaluator)
 
     def one_step(self, data) -> Tuple[torch.Tensor, tuple]:
-        token_ids, summar_ids, bertsum_ids, entities_ids, role_ids, token_mask, summar_mask, bertsum_mask, entities_mask, role_ids_mask, role_names, role_labels, role_spans, entity_span, char2token, span2entity = data
+        token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_names, role_labels, role_spans, entity_span, char2token, entity2token = data
         '''
         token_ids [batch, seq_len]
         summar_ids [batch, seq_len]
@@ -27,12 +28,10 @@ class DecoderTrainer(TrainerBasic):
         '''
         # 模型训练
         # try:
-        loss, module_output = self.model(token_ids, summar_ids, bertsum_ids, entities_ids, role_ids, token_mask, summar_mask, bertsum_mask, entities_mask, role_ids_mask, role_labels, entity_span, char2token, span2entity)
-        # except RuntimeError as e:
-            # if 'out of memory' in str(e):
-                # print('| WARNING: ran out of memory')
-        if hasattr(torch.cuda, 'empty_cache'):
-            torch.cuda.empty_cache()
+        loss, module_output = self.model(token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_labels, entity_span, char2token, entity2token)
+        # make_dot(module_output, params=dict(list(self.model.named_parameters()))).render("torchviz", format="png")
+        # if hasattr(torch.cuda, 'empty_cache'):
+        #     torch.cuda.empty_cache()
         return loss, module_output
 
     def init_log_cache(self) -> Dict[str, list]:
@@ -45,7 +44,9 @@ class DecoderTrainer(TrainerBasic):
         return log_cache
 
     def update_log_cache(self, log_cache: dict, data, loss, model_output, tag):
-        # 先存loss
+        '''
+            存储模型输出结果
+        '''
         super().update_log_cache(log_cache, data, loss, model_output)
         
         pred_args = model_output.transpose(0,1) # [batch_size* role_num * seq_len]
@@ -57,6 +58,9 @@ class DecoderTrainer(TrainerBasic):
 
 
     def calculate_matrics_and_save_log(self, log_cache, tag: str):
+        '''
+            根据存储的模型结果计算指标
+        '''
         if tag == 'train':
             dict_lr = {
                 'lr': self.scheduler.get_last_lr()[0]

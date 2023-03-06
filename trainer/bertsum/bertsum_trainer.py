@@ -24,7 +24,7 @@ class BertSumTrainer(TrainerBasic):
         '''
         # 模型训练
         loss, sent_pred = self.model(src, labels, segs, clss, mask, mask_cls, summarization)
-        return loss.mean(), (sent_pred)
+        return loss, (sent_pred)
 
     def init_log_cache(self) -> Dict[str, list]:
         log_cache = {

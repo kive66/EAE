@@ -12,7 +12,6 @@ def calculate(config, pred_label_idx, true_label_idx, slot_types):
     for i in range(len(pred_label_idx)):
         sentences = docs[i]['sentences']
         text = []
-        role_with_span = {}
         for sent in sentences:
             text.extend(sent)
         slot_type = [slot for slot in slot_types[i] if slot != '']
@@ -37,6 +36,9 @@ def calculate(config, pred_label_idx, true_label_idx, slot_types):
     
     
 def metric(true_positive_n, pred_mention_n, gold_mention_n):
+    '''
+        计算p, f, r
+    '''
     prec_c, recall_c, f1_c = 0, 0, 0
     if pred_mention_n != 0:
         prec_c = true_positive_n / pred_mention_n
@@ -54,6 +56,9 @@ def metric(true_positive_n, pred_mention_n, gold_mention_n):
         
         
 def count_tp(y_gold, y_pred):
+    '''
+        计算tp
+    '''
     true_positive = 0
     for y in y_pred:
         if y in y_gold:
@@ -63,6 +68,9 @@ def count_tp(y_gold, y_pred):
 
 
 def gen_tuples(text, roles, data):
+    '''
+        通过span从原文中获取论元词构造(word, role)的tuple
+    '''
     ai_data = set()
     ac_data = set()
     for i, role in enumerate(roles):

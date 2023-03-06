@@ -38,3 +38,8 @@ import torch
 # l = [t1,t2]
 # print(torch.stack(l).device)
 d = {'true':['word','a'], 'pred':['word']}
+a = torch.tensor([[1,2,3],[1,2,3],[1,2,3]])
+b = torch.tensor([[1],[2],[3]])
+print(a.shape)
+print(b.shape)
+print(torch.mul(a,b))
