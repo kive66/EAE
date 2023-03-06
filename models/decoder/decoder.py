@@ -3,7 +3,7 @@ import torch.nn as nn
 from transformers import AutoModel
 from configs.config import Config
 from models.layers.summar_encoder import SummarEncoder
-from models.layers.sigmoid_role_decoder import RoleDecoder
+from models.layers.binary_role_decoder import RoleDecoder
 
 
 class Decoder(nn.Module):
@@ -24,12 +24,12 @@ class Decoder(nn.Module):
         summar_embedding = self.sum_encoder(self.bert, summar_ids, bertsum_ids, summar_mask, bertsum_mask)
         
         # 根据论元角色顺序进行双向预测
-        forward_loss, forward_ids = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, entity_spans, token_mask, char2token, entity2token)
+        forward_loss, forward_ids = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
 
         reversed_summar_role_embedding = torch.flip(summar_embedding, [0])
         reversed_role_labels = torch.flip(role_labels, [0])
         
-        backward_loss, backward_ids = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, entity_spans, token_mask, char2token, entity2token)
+        backward_loss, backward_ids = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
         
         best_ids = self.get_best_pred(forward_ids, backward_ids)
         total_loss = forward_loss + backward_loss

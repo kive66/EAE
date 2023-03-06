@@ -40,6 +40,8 @@ import torch
 d = {'true':['word','a'], 'pred':['word']}
 a = torch.tensor([[1,2,3],[1,2,3],[1,2,3]])
 b = torch.tensor([[1],[2],[3]])
-print(a.shape)
-print(b.shape)
-print(torch.mul(a,b))
+m = torch.nn.Softmax()
+input = torch.randn(2, 3)
+output = m(input)
+print(output)
+# print(torch.mul(a,b))

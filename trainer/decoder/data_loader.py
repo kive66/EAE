@@ -39,8 +39,6 @@ class DecoderLoader():
     def collate_fn_events(data:list, config:Config):
         tokens = []
         role_names = []
-        role_ids = []
-        role_mask = []
         role_labels = []
         role_spans = []
         summarization = []
@@ -53,7 +51,7 @@ class DecoderLoader():
         for ex in data:
             tokens.append(ex['tokens'])
             role_names.append(ex['roles'])
-            role_labels.append(ex['role_labels'])
+            # role_labels.append(ex['role_labels'])
             role_spans.append(ex['role_spans'])
             summarization.append(ex['summarization'])
             bertsum.append(ex['bertsum'])
@@ -72,7 +70,6 @@ class DecoderLoader():
         )
         # 生成原始句子到分词句子的词映射
         for i in range(len(data)):
-            a = sent_tokens.word_ids(i)
             char2token.append(sent_tokens.word_ids(i))
        
         # 实体相连的向量化 
@@ -88,7 +85,6 @@ class DecoderLoader():
         )
         # 生成原始句子到分词句子的实体映射
         for i in range(len(data)):
-            a = entities.word_ids(i)
             entity2token.append(entities.word_ids(i))
             
         #与论元角色共同编码    
@@ -97,14 +93,36 @@ class DecoderLoader():
         
         summar_masks = []
         bertsum_masks = []
+        
+        role_labels = torch.zeros((len(data),config.max_role_num, config.max_seq_len), dtype=torch.float)
+        role_start_labels = []
+        role_end_labels = []
         for i, roles in enumerate(role_names):
+            # 处理batch i的所有roles
             summar_role_embedding = []
             bertsum_role_embedding = []
             
             summar_role_mask = []
             bertsum_role_mask = []
-            for role in roles:
-             # 摘要向量化
+            
+            role_start_label = [] # batch i [role_num, start_dim]
+            role_end_label = [] # batch i [role_num, end_dim]
+            for j, role in enumerate(roles):
+                # 处理一个role的多个span
+                role_span = role_spans[i][j]
+                role_starts= [] # 一个role的所有论元start
+                role_ends = [] # 一个role的所有论元end
+                for span in role_span:
+                    role_starts.append(span[0])
+                    role_ends.append(span[1])
+                    role_token_start = sent_tokens.char_to_token(i, span[0])
+                    role_token_end = sent_tokens.char_to_token(i, span[1])
+                    if role_token_start and role_token_end:
+                        for k in range(role_token_start, role_token_start):
+                            role_labels[i][j][k] = 1
+                role_start_label.append(role_starts)
+                role_end_label.append(role_ends)
+                # 摘要向量化
                 summar_embedding:BatchEncoding = config.tokenizer(
                     summarization[i],
                     role,
@@ -131,6 +149,9 @@ class DecoderLoader():
                 bertsum_role_embedding.extend(bertsum_embedding.input_ids)
                 bertsum_role_mask.extend(bertsum_embedding.attention_mask)
                 
+            role_start_labels.append(role_start_label)
+            role_end_labels.append(role_end_label)
+                
             summar_embeddings.append(torch.stack(summar_role_embedding))
             bertsum_embeddings.append(torch.stack(bertsum_role_embedding))
             
@@ -143,7 +164,7 @@ class DecoderLoader():
         summar_masks = torch.stack(summar_masks).transpose(0,1)
         bertsum_masks = torch.stack(bertsum_masks).transpose(0,1)
         
-        role_labels = torch.tensor(role_labels, dtype=torch.float).transpose(0,1)
+        role_labels = role_labels.transpose(0,1)
         return sent_tokens.input_ids, entities.input_ids, summar_embeddings, bertsum_embeddings, sent_tokens.attention_mask, entities.attention_mask, summar_masks, bertsum_masks, role_names, role_labels, role_spans, entity_spans, char2token, entity2token
             
 
@@ -176,7 +197,7 @@ class Rams(Dataset):
             
     
     def load_dataset(self, dataset_type)->list:
-       
+        
         path = self.get_path(dataset_type)
         dataset = load_json(path)
         event_role_dict = self.load_event_dict(self.config.event_path)
@@ -193,7 +214,7 @@ class Rams(Dataset):
             bertsum = doc['bertsum']
             text = []#文档文本
             roles = []#论元角色
-            role_labels = []#文档文本中真实论元角色向量
+            # role_labels = []#文档文本中真实论元角色向量
             role_spans = []#文档文本中真实论元角色
             entities = [] #
             entity_span = []
@@ -209,13 +230,8 @@ class Rams(Dataset):
                 for arg in arguments:
                     arg_role = arg[2][0][0]
                     arg_role = re.findall(r'[0-9]+|[a-z]+', arg_role)[-1]
-                    if role == arg_role:
-                        for i in range(arg[0], arg[1]+1):
-                            if arg[1]+1 <self.config.max_seq_len:
-                                role_label[i] = 1
+                    if role == arg_role and arg[1]+1 <self.config.max_seq_len:
                         role_span.append([arg[0],arg[1]+1])
-                
-                role_labels.append(role_label)
                 role_spans.append(role_span)        
 
             for entity in doc_entities:
@@ -231,7 +247,7 @@ class Rams(Dataset):
                         multi_span.append((span[-2],span[-1]+1))
                 entity_span.append(multi_span)
                     
-            data.append({'tokens':text, 'roles': roles, 'role_labels': role_labels, 'role_spans': role_spans, 'summarization': summar, 'bertsum': bertsum, 'entities': entities, 'entity_span': entity_span})
+            data.append({'tokens':text, 'roles': roles, 'role_spans': role_spans, 'summarization': summar, 'bertsum': bertsum, 'entities': entities, 'entity_span': entity_span})
 
         return data
     def __len__(self):
