@@ -50,7 +50,7 @@ class DecoderTrainer(TrainerBasic):
         super().update_log_cache(log_cache, data, loss, model_output)
         
         pred_args = model_output.transpose(0,1) # [batch_size* role_num * seq_len]
-        pred_args = self.vec2span(pred_args, data[-3])
+        pred_args = self.vec2span(pred_args, data[-3], data[-2])
         true_args = data[-4] # [batch_size* arg]
         log_cache['true_args'].extend(true_args)
         log_cache['role_names'].extend(data[-6])
@@ -133,7 +133,7 @@ class DecoderTrainer(TrainerBasic):
             result.append({'doc_key': doc_key,'sentence': ' '.join(text), 'role_with_span': role_with_span})
         write_json(result, 'result.json')
         
-    def vec2span(self, pred_args, entity_spans):
+    def vec2span(self, pred_args, entity_spans, char2token):
         # [batch_size* role_num * seq_len]
         pred_arg_spans = []
         batch_size = len(pred_args)
@@ -143,13 +143,34 @@ class DecoderTrainer(TrainerBasic):
             pred_arg_span = [] #一个文档所有论元角色的所有span
             for vec in roles:
                 role_span = set()# 一个论元角色的所有span
-                for j, logic in enumerate(vec):
-                    if logic > self.config.threshold:
-                        span = self.judge_id_in_span(j, entity_span)
-                        if span:
-                            role_span.update(span)         
-                        else:
-                            role_span.add((j,j+1))
+                max_pos = 0
+                max_logits = 0 
+                for j, logits in enumerate(vec):
+                    if logits > max_logits:
+                        max_pos = j
+                        max_logits = logits
+                    # if logic > self.config.threshold:
+                    #     span = self.judge_id_in_span(j, entity_span)
+                    #     if span:
+                    #         role_span.update(span)         
+                    #     else:
+                    #         role_span.add((j,j+1))
+                if max_logits > self.config.threshold:
+                    span = self.judge_id_in_span(max_pos, entity_span)
+                    if span:
+                        start = char2token[i][span[0]]
+                        end = char2token[i][span[1]]
+                        if start and end:
+                            try:
+                                end = end if end > start else start+1
+                                role_span.add((start, end))
+                            except Exception as e:
+                                print(e)
+                    else:
+                        start = char2token[i][max_pos]
+                        if start:
+                            end = start + 1
+                            role_span.add((start, end))
                 pred_arg_span.append(list(role_span))
             pred_arg_spans.append(pred_arg_span)
         return pred_arg_spans
@@ -166,5 +187,6 @@ class DecoderTrainer(TrainerBasic):
         for entity in entity_span:
             for span in entity:
                 if id in range(span[0], span[1]):
-                    return [span]
+                    return span
         return None
+    

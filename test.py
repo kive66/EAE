@@ -33,8 +33,9 @@ t = tokenizer(
             return_offsets_mapping=True,
             return_tensors="pt"
         )
-print(t.tokens(1))
-print(t.word_ids(1))
+print(t.tokens(0))
+print(t.word_to_tokens(0,3).end)
+print(t.word_ids(0))
 # print(t)
 # t1 = tokenizer.tokenize(t[1])
 # print(t1)

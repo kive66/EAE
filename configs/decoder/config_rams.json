@@ -31,12 +31,12 @@
     "drop_rate": 0.5,
     "drop_last": true,
     
-    "max_seq_len": 450,
+    "max_seq_len": 512,
     "max_desc_seq_len": 512,
     "max_role_num" : 5,
     "eval_step": 900,
     "log_step": 50,
     "shuffle": true,
     "num_workers": 1,
-    "threshold" : 0.5
+    "threshold" : 0.3
 }

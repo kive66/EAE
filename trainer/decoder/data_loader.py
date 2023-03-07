@@ -113,13 +113,13 @@ class DecoderLoader():
                 role_starts= [] # 一个role的所有论元start
                 role_ends = [] # 一个role的所有论元end
                 for span in role_span:
-                    role_starts.append(span[0])
-                    role_ends.append(span[1])
-                    role_token_start = sent_tokens.char_to_token(i, span[0])
-                    role_token_end = sent_tokens.char_to_token(i, span[1])
+                    role_token_start = sent_tokens.word_to_tokens(i, span[0])
+                    role_token_end = sent_tokens.word_to_tokens(i, span[1])
                     if role_token_start and role_token_end:
-                        for k in range(role_token_start, role_token_start):
+                        for k in range(role_token_start.start, role_token_start.end):
                             role_labels[i][j][k] = 1
+                        role_starts.append(role_token_start.start)
+                        role_ends.append(role_token_end.end)
                 role_start_label.append(role_starts)
                 role_end_label.append(role_ends)
                 # 摘要向量化
@@ -157,6 +157,17 @@ class DecoderLoader():
             
             summar_masks.append(torch.stack(summar_role_mask))
             bertsum_masks.append(torch.stack(bertsum_role_mask))
+        
+        # 映射entity span到bert分词句子
+        for i in range(len(data)):
+            entity_span = entity_spans[i]
+            for entity in entity_span:
+                for span in entity:
+                    entity_start = sent_tokens.word_to_tokens(i, span[0])
+                    entity_end = sent_tokens.word_to_tokens(i, span[1])
+                    if entity_start and entity_end:
+                        span[0] = entity_start.start
+                        span[1] = entity_end.end
             
         summar_embeddings = torch.stack(summar_embeddings).transpose(0,1)
         bertsum_embeddings = torch.stack(bertsum_embeddings).transpose(0,1)
@@ -225,7 +236,7 @@ class Rams(Dataset):
                 roles.extend(event_role_dict[event_type])
             # 构造token对应角色序列
             for role in roles:
-                role_label = [0] * self.config.max_seq_len
+                # role_label = [0] * self.config.max_seq_len
                 role_span = []
                 for arg in arguments:
                     arg_role = arg[2][0][0]
@@ -244,7 +255,7 @@ class Rams(Dataset):
                 multi_span = []
                 for span in entity:
                     if span[-1]+1 <= self.config.max_seq_len:
-                        multi_span.append((span[-2],span[-1]+1))
+                        multi_span.append([span[-2],span[-1]+1])
                 entity_span.append(multi_span)
                     
             data.append({'tokens':text, 'roles': roles, 'role_spans': role_spans, 'summarization': summar, 'bertsum': bertsum, 'entities': entities, 'entity_span': entity_span})

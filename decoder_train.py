@@ -38,7 +38,7 @@ if __name__ == '__main__':
     # config.device = device
 
     model = Decoder(config)
-    # model.load_state_dict(torch.load('exp/2023-02-28/rams_bert_20230228172135/best.pth', map_location='cpu'))
+    model.load_state_dict(torch.load('exp/2023-03-07/rams_bert_20230307151835/best.pth', map_location='cpu'))
 
     model.to(config.device)
     # model = DataParallel(model, device_ids=[0, 1])

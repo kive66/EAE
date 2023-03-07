@@ -174,23 +174,32 @@ class TrainerBasic():
 
         self.start_time = time.time()
         stop = False
-
+        load_data_start = time.perf_counter()
         for epoch in range(self.config.num_epochs):
             self.config.logger.info("******************** Epoch: {}/{} ***********************".format(epoch+1, self.config.num_epochs))
             for i, data in enumerate(self.train_dataloader):
+                load_data_end = time.perf_counter()
+                # print('data时间:%s毫秒' % ((load_data_end - load_data_start)*1000))
+                
                 data = self.to_device(data, self.config)
                 # model forward
+                model_start = time.perf_counter()
                 loss, model_output = self.one_step(data)
                 # model backward
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.model.parameters(), 5)
-
+                model_end = time.perf_counter()
+                # print('model时间:%s毫秒' % ((model_end - model_start)*1000))
+                
                 # calculate train acc
+                save_start = time.perf_counter()
                 self.update_log_cache(train_log_cache, data, loss, model_output, 'train')
                 if self.should_log():
                     self.config.logger.info("step: {}/{}, Train loss: {:.2f}".format(self.total_batch%len(self.train_dataloader), len(self.train_dataloader), np.array(train_log_cache['loss']).mean()))
                     self.calculate_matrics_and_save_log(train_log_cache, 'train')
-
+                save_end = time.perf_counter()
+                # print('save时间:%s毫秒\n' % ((save_end - save_start)*1000))
+                
                 # model step
                 # if self.total_batch % self.config. == 0:
                 self.optimizer.step()
@@ -208,7 +217,8 @@ class TrainerBasic():
                     self.config.logger.info("No optimization for a long time, auto-stopping...")
                     stop = True
                     break
-
+                load_data_start = time.perf_counter()
+                
             if stop:
                 break
 

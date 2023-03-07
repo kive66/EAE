@@ -24,28 +24,28 @@ class Decoder(nn.Module):
         summar_embedding = self.sum_encoder(self.bert, summar_ids, bertsum_ids, summar_mask, bertsum_mask)
         
         # 根据论元角色顺序进行双向预测
-        forward_loss, forward_ids = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
+        forward_loss, forward_logits = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
 
         reversed_summar_role_embedding = torch.flip(summar_embedding, [0])
         reversed_role_labels = torch.flip(role_labels, [0])
         
-        backward_loss, backward_ids = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
+        backward_loss, backward_logits = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
         
-        best_ids = self.get_best_pred(forward_ids, backward_ids)
+        best_logits = self.get_best_pred(forward_logits, backward_logits)
         total_loss = forward_loss + backward_loss
         
-        return total_loss.mean(), best_ids
+        return total_loss.mean(), best_logits
     
 
     def get_best_pred(self, forward_ids, backward_ids):
         backward_ids = torch.flip(backward_ids, [0])
         
         merge_ids = torch.cat((forward_ids.unsqueeze(-1), backward_ids.unsqueeze(-1)),dim =-1)
-        best_ids = torch.max(merge_ids, dim=-1)[0]
+        best_logits = torch.max(merge_ids, dim=-1)[0]
         # result_spans = forward_spans
         # role_num = self.config.max_role_num
         # for i in range(role_num):
         #     for j in range(batch_size):
         #         result_spans[i][j].extend(backward_spans[role_num-i-1[j]])
-        return best_ids
+        return best_logits
             
