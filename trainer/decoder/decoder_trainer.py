@@ -143,13 +143,23 @@ class DecoderTrainer(TrainerBasic):
             pred_arg_span = [] #一个文档所有论元角色的所有span
             for vec in roles:
                 role_span = set()# 一个论元角色的所有span
-                for j, logic in enumerate(vec):
-                    if logic > self.config.threshold:
-                        span = self.judge_id_in_span(j, entity_span)
-                        if span:
-                            role_span.update(span)         
-                        else:
-                            role_span.add((j,j+1))
+                max_logits = 0
+                for j, logits in enumerate(vec):
+                    if logits > max_logits:
+                        max_pos = j
+                        max_logits = logits
+                    # if logic > self.config.threshold:
+                    #     span = self.judge_id_in_span(j, entity_span)
+                    #     if span:
+                    #         role_span.update(span)         
+                    #     else:
+                    #         role_span.add((j,j+1))
+                if max_logits > self.config.threshold:
+                    span = self.judge_id_in_span(max_pos, entity_span)
+                    if span:
+                        role_span.add((span[0], span[1]))
+                    else:
+                        role_span.add((j, j+1))
                 pred_arg_span.append(list(role_span))
             pred_arg_spans.append(pred_arg_span)
         return pred_arg_spans
@@ -166,5 +176,5 @@ class DecoderTrainer(TrainerBasic):
         for entity in entity_span:
             for span in entity:
                 if id in range(span[0], span[1]):
-                    return [span]
+                    return span
         return None
