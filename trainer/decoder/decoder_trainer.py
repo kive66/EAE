@@ -84,7 +84,7 @@ class DecoderTrainer(TrainerBasic):
             
             sent['f1'] = metric_score['f_c']
             sent['precision'] = metric_score['p_c']
-            sent['recall'] = metric_score['f_c']
+            sent['recall'] = metric_score['r_c']
 
             self.config.tbWriter.add_scalars(
                 'sent', sent, global_step=self.total_batch)
