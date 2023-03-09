@@ -70,8 +70,8 @@ class RoleDecoder(nn.Module):
         pred_arg_logits= [] # 按照bert分词映射的结果
         batch_size = len(char2token)
         for i in range(batch_size):
-            pred_token_logits = single_word_pred[i] # 按照原句分词的token映射结果
-            pred_entity_logits = torch.zeros(self.config.max_seq_len).to(self.config.device) # 按照原句分词的entity映射结果
+            pred_token_logits = single_word_pred[i]
+            pred_entity_logits = torch.zeros(self.config.max_seq_len).to(self.config.device)
             # pred_arg_logits = torch.zeros(self.config.max_seq_len).to(self.config.device) #按照bert分词的融合结果
             
             # 映射token embedding 到原句
@@ -87,8 +87,6 @@ class RoleDecoder(nn.Module):
             for j in range(len(word_ids)):
                 if word_ids[j] != None:
                     word_pos = word_ids[j]
-                    if word_pos >= len(entity_spans[i]):
-                        break 
                     entity_scores[word_pos] = max(entity_scores[word_pos], multi_word_pred[i][j])
             
             #映射entity到token embedding该entity所有span上

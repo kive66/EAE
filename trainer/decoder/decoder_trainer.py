@@ -84,7 +84,7 @@ class DecoderTrainer(TrainerBasic):
             
             sent['f1'] = metric_score['f_c']
             sent['precision'] = metric_score['p_c']
-            sent['recall'] = metric_score['f_c']
+            sent['recall'] = metric_score['r_c']
 
             self.config.tbWriter.add_scalars(
                 'sent', sent, global_step=self.total_batch)
@@ -160,12 +160,12 @@ class DecoderTrainer(TrainerBasic):
                     if span:
                         start = char2token[i][span[0]]
                         end = char2token[i][span[1]]
+                        end_ = char2token[i][span[1]-1] #以防end 映射到None但end-1映射有值
                         if start and end:
-                            try:
-                                end = end if end > start else start+1
-                                role_span.add((start, end))
-                            except Exception as e:
-                                print(e)
+                            end = end if end > start else start+1
+                            role_span.add((start, end))
+                        elif start and end_:
+                            role_span.add((start, end_ + 1))
                     else:
                         start = char2token[i][max_pos]
                         if start:

@@ -68,7 +68,8 @@ class DecoderLoader():
             # return_offsets_mapping = True,
             return_tensors="pt"
         )
-        # 生成原始句子到分词句子的词映射
+        # 生成分词句子到原始句子的词映射
+        # tokenized: [none, 1,1,1,2,2,...,none]
         for i in range(len(data)):
             char2token.append(sent_tokens.word_ids(i))
        
@@ -83,7 +84,7 @@ class DecoderLoader():
             return_offsets_mapping = True,
             return_tensors="pt"
         )
-        # 生成原始句子到分词句子的实体映射
+        # 生成分词句子到原始句子的实体映射
         for i in range(len(data)):
             entity2token.append(entities.word_ids(i))
             
@@ -159,15 +160,22 @@ class DecoderLoader():
             bertsum_masks.append(torch.stack(bertsum_role_mask))
         
         # 映射entity span到bert分词句子
+        batch_entity_spans = []
         for i in range(len(data)):
             entity_span = entity_spans[i]
+            batch_entity_span = []
             for entity in entity_span:
-                for span in entity:
+                batch_entity = []
+                for j, span in enumerate(entity):
                     entity_start = sent_tokens.word_to_tokens(i, span[0])
                     entity_end = sent_tokens.word_to_tokens(i, span[1])
+                    entity_end_ = sent_tokens.word_to_tokens(i, span[1]-1)
                     if entity_start and entity_end:
-                        span[0] = entity_start.start
-                        span[1] = entity_end.end
+                        batch_entity.append([entity_start.start, entity_end.end])
+                    elif entity_start and entity_end_:
+                        batch_entity.append([entity_start.start, entity_end_.end])
+                batch_entity_span.append(batch_entity)
+            batch_entity_spans.append(batch_entity_span)        
             
         summar_embeddings = torch.stack(summar_embeddings).transpose(0,1)
         bertsum_embeddings = torch.stack(bertsum_embeddings).transpose(0,1)
@@ -234,7 +242,7 @@ class Rams(Dataset):
             for trigger in evt_triggers:
                 event_type = trigger[2][0][0]
                 roles.extend(event_role_dict[event_type])
-            # 构造token对应角色序列
+            # 找到每个角色下论元
             for role in roles:
                 # role_label = [0] * self.config.max_seq_len
                 role_span = []

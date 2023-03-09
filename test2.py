@@ -37,11 +37,17 @@ print('程序运行时间:%s毫秒' % ((T2 - T1)*1000))
 # t2 = torch.ones(6,device='cuda')
 # l = [t1,t2]
 # print(torch.stack(l).device)
-d = {'true':['word','a'], 'pred':['word']}
-a = torch.tensor([[1,2,3],[1,2,3],[1,2,3]])
-b = torch.tensor([[1],[2],[3]])
-m = torch.nn.Softmax()
-input = torch.randn(2, 3)
-output = m(input)
-print(output)
+# d = {'true':['word','a'], 'pred':['word']}
+# a = torch.tensor([[1,2,3],[1,2,3],[1,2,3]])
+# b = torch.tensor([[1],[2],[3]])
+# m = torch.nn.Softmax()
+# input = torch.randn(2, 3)
+# output = m(input)
+# print(output)
+l = [1,2,3,4,5,6]
+for i in l:
+    print(l)
+    if i == 3:
+        l.pop(3)
+    print(i)
 # print(torch.mul(a,b))

@@ -26,13 +26,15 @@ class Decoder(nn.Module):
         # 根据论元角色顺序进行双向预测
         forward_loss, forward_logits = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
 
-        reversed_summar_role_embedding = torch.flip(summar_embedding, [0])
-        reversed_role_labels = torch.flip(role_labels, [0])
+        # reversed_summar_role_embedding = torch.flip(summar_embedding, [0])
+        # reversed_role_labels = torch.flip(role_labels, [0])
         
-        backward_loss, backward_logits = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
+        # backward_loss, backward_logits = self.role_decoder(reversed_role_labels, reversed_summar_role_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
         
-        best_logits = self.get_best_pred(forward_logits, backward_logits)
-        total_loss = forward_loss + backward_loss
+        # best_logits = self.get_best_pred(forward_logits, backward_logits)
+        # total_loss = forward_loss + backward_loss
+        best_logits = forward_logits
+        total_loss = forward_loss 
         
         return total_loss.mean(), best_logits
     
