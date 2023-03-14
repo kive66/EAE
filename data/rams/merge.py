@@ -13,7 +13,7 @@ def write_json(result, path):
 
 type = ['train','dev','test']
 for t in type:
-    summar = read_json('exp/rams/large/'+t+'.json')
+    summar = read_json('data/rams/add_sum/'+t+'.json')
     entity = read_json('data/rams/add_entity_rams/'+ t+'.json')
 
     result = entity

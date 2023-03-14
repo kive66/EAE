@@ -153,8 +153,8 @@ class DecoderTrainer(TrainerBasic):
                 role_entities = set()
                 a = start_logits[j]
                 b = end_logits[j]
-                role_start_logits, role_start_entities = self.get_best_indexes(start_logits[j], entity_span, larger_than_cls=True, cls_logit=start_logits[j][0])
-                role_end_logits, role_end_entities = self.get_best_indexes(end_logits[j], entity_span, larger_than_cls=True, cls_logit=end_logits[j][0])
+                role_start_logits, role_start_entities = self.get_best_indexes(start_logits[j], entity_span, larger_than_cls=True)
+                role_end_logits, role_end_entities = self.get_best_indexes(end_logits[j], entity_span, larger_than_cls=True)
 
                 role_entities.update(role_start_entities)
                 role_entities.update(role_end_entities)
@@ -194,7 +194,7 @@ class DecoderTrainer(TrainerBasic):
             batch_pred_spans.append(pred_arg_spans)
         return batch_pred_spans
 
-    def get_best_indexes(self, logits, entity_span, n_best_size=1, larger_than_cls=False, cls_logit=None):
+    def get_best_indexes(self, logits, entity_span, n_best_size=1, larger_than_cls=False, cls_logit=0.5):
         """Get the n-best logits from a list."""
         index_and_score = sorted(enumerate(logits), key=lambda x: x[1], reverse=True)
 
