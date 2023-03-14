@@ -16,7 +16,7 @@ class DecoderTrainer(TrainerBasic):
         super().__init__(config, model, train_dataloader, test_dataloader, dev_dataloader, evaluator)
 
     def one_step(self, data) -> Tuple[torch.Tensor, tuple]:
-        token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_names, role_labels, role_spans, entity_span, char2token, entity2token = data
+        token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_names, role_starts, role_ends, role_spans, entity_span, char2token, entity2token = data
         '''
         token_ids [batch, seq_len]
         summar_ids [batch, seq_len]
@@ -28,7 +28,7 @@ class DecoderTrainer(TrainerBasic):
         '''
         # 模型训练
         # try:
-        loss, module_output = self.model(token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_labels, entity_span, char2token, entity2token)
+        loss, module_output = self.model(token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_starts, role_ends, entity_span, char2token, entity2token)
         # make_dot(module_output, params=dict(list(self.model.named_parameters()))).render("torchviz", format="png")
         # if hasattr(torch.cuda, 'empty_cache'):
         #     torch.cuda.empty_cache()
@@ -49,12 +49,17 @@ class DecoderTrainer(TrainerBasic):
         '''
         super().update_log_cache(log_cache, data, loss, model_output)
         
-        pred_args = model_output.transpose(0,1) # [batch_size* role_num * seq_len]
-        pred_args = self.vec2span(pred_args, data[-3], data[-2])
-        true_args = data[-4] # [batch_size* arg]
-        log_cache['true_args'].extend(true_args)
-        log_cache['role_names'].extend(data[-6])
-        log_cache['pred_args'].extend(pred_args)
+        if tag == 'test':
+            start_logits, end_logits = model_output
+            start_logits = start_logits.transpose(0,1) # [batch_size* role_num * seq_len]
+            end_logits = end_logits.transpose(0,1) # [batch_size* role_num * seq_len]
+            
+            token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_names, role_starts, role_ends, role_spans, entity_spans, char2token, entity2token = data
+            
+            pred_args = self.vec2span(start_logits, end_logits, entity_spans, char2token)
+            log_cache['true_args'].extend(role_spans)
+            log_cache['role_names'].extend(role_names)
+            log_cache['pred_args'].extend(pred_args)
 
 
     def calculate_matrics_and_save_log(self, log_cache, tag: str):
@@ -122,9 +127,9 @@ class DecoderTrainer(TrainerBasic):
                 true_arg_word = set()
                 pred_arg_word = set()
                 for span in true_arg_span:
-                    true_arg_word.update(text[span[0]:span[1]])
+                    true_arg_word.add(' '.join(text[span[0]:span[1]]))
                 for span in pred_arg_span:
-                    pred_arg_word.update(text[span[0]:span[1]])   
+                    pred_arg_word.add(' '.join(text[span[0]:span[1]]))
                 role_with_span[role] = {'true': list(true_arg_word), 'pred': list(pred_arg_word)}
                 # true_arg_idx = [idx for idx, k in enumerate(true_arg[j]) if k>0]
                 # pred_arg_idx = [idx for idx, k in enumerate(pred_arg[j]) if k>0]
@@ -133,55 +138,80 @@ class DecoderTrainer(TrainerBasic):
             result.append({'doc_key': doc_key,'sentence': ' '.join(text), 'role_with_span': role_with_span})
         write_json(result, 'result.json')
         
-    def vec2span(self, pred_args, entity_spans, char2token):
+    def vec2span(self, batch_start_logits, batch_end_logits, batch_entity_spans, batch_char2token):
         # [batch_size* role_num * seq_len]
-        pred_arg_spans = []
-        batch_size = len(pred_args)
+        batch_pred_spans = []
+        batch_size = len(batch_char2token)
         for i in range(batch_size):
-            roles = pred_args[i] # 一个文档中的所有角色得分
-            entity_span = entity_spans[i] #一个文档中的所有实体span
-            pred_arg_span = [] #一个文档所有论元角色的所有span
-            for vec in roles:
-                role_span = set()# 一个论元角色的所有span
-                max_pos = 0
-                max_logits = 0 
-                for j, logits in enumerate(vec):
-                    if logits > max_logits:
-                        max_pos = j
-                        max_logits = logits
-                    # if logic > self.config.threshold:
-                    #     span = self.judge_id_in_span(j, entity_span)
-                    #     if span:
-                    #         role_span.update(span)         
-                    #     else:
-                    #         role_span.add((j,j+1))
-                if max_logits > self.config.threshold:
-                    span = self.judge_id_in_span(max_pos, entity_span)
-                    if span:
-                        start = char2token[i][span[0]]
-                        end = char2token[i][span[1]]
-                        end_ = char2token[i][span[1]-1] #以防end 映射到None但end-1映射有值
-                        if start and end:
-                            end = end if end > start else start+1
-                            role_span.add((start, end))
-                        elif start and end_:
-                            role_span.add((start, end_ + 1))
-                    else:
-                        start = char2token[i][max_pos]
-                        if start:
-                            end = start + 1
-                            role_span.add((start, end))
-                pred_arg_span.append(list(role_span))
-            pred_arg_spans.append(pred_arg_span)
-        return pred_arg_spans
+            start_logits = batch_start_logits[i] # 一个文档中的所有角色得分
+            end_logits = batch_end_logits[i]
+            entity_span = batch_entity_spans[i] #一个文档中的所有实体span
+            char2token = batch_char2token[i]
+            pred_arg_spans = [] #一个文档所有论元角色的所有span
+            for j in range(self.config.max_role_num):
+                role_arg_spans = set()
+                role_entities = set()
+                a = start_logits[j]
+                b = end_logits[j]
+                role_start_logits, role_start_entities = self.get_best_indexes(start_logits[j], entity_span, larger_than_cls=True, cls_logit=start_logits[j][0])
+                role_end_logits, role_end_entities = self.get_best_indexes(end_logits[j], entity_span, larger_than_cls=True, cls_logit=end_logits[j][0])
 
-    # 如果一个位置的概率超过阈值，将包含该次的实体以及该实体的所有span添加
-    # def judge_id_in_span(self, id, entity_span):
-    #     for entity in entity_span:
-    #         for span in entity:
-    #             if id in range(span[0], span[1]):
-    #                 return entity
-    #     return None
+                role_entities.update(role_start_entities)
+                role_entities.update(role_end_entities)
+                
+                # 将entity span映射回原句
+                for span in role_entities:
+                    origin_start_index = char2token[span[0]]
+                    origin_end_index = char2token[span[1]]
+                    origin_end_index_ = char2token[span[1]-1]
+                    if origin_start_index and origin_end_index:
+                        origin_end_index = origin_end_index if origin_end_index > origin_start_index else origin_start_index + 1
+                        span = [origin_start_index, origin_end_index]
+                    elif origin_start_index and origin_end_index_:
+                        origin_end_index = origin_end_index + 1 if origin_end_index_ > origin_start_index else origin_start_index + 1
+                        span = [origin_start_index, origin_end_index]
+                    role_arg_spans.add((span[0], span[1]))
+                # add span preds
+                for start_index in role_start_logits:
+                    for end_index in role_end_logits:
+                        if end_index <= start_index:
+                            continue
+                        origin_start_index = char2token[start_index]
+                        origin_end_index = char2token[end_index]
+                        origin_end_index_ = char2token[end_index-1]
+                        if origin_start_index and origin_end_index:
+                            length = end_index - start_index + 1
+                            if length > 15 :
+                                continue
+                            origin_end_index = origin_end_index if origin_end_index > origin_start_index else origin_start_index + 1
+                            span = [origin_start_index, origin_end_index]
+                            role_arg_spans.add((span[0], span[1]))
+                        elif origin_start_index and origin_end_index_:
+                            origin_end_index = origin_end_index_ + 1 if origin_end_index_ > origin_start_index else origin_start_index + 1
+                            span = [origin_start_index, origin_end_index]
+                            role_arg_spans.add((span[0], span[1]))
+                pred_arg_spans.append(role_arg_spans)
+            batch_pred_spans.append(pred_arg_spans)
+        return batch_pred_spans
+
+    def get_best_indexes(self, logits, entity_span, n_best_size=1, larger_than_cls=False, cls_logit=None):
+        """Get the n-best logits from a list."""
+        index_and_score = sorted(enumerate(logits), key=lambda x: x[1], reverse=True)
+
+        best_indexes = []
+        best_entities = set()
+        for i in range(len(index_and_score)):
+            if i >= n_best_size:
+                break
+            if larger_than_cls:
+                if index_and_score[i][1] < cls_logit:
+                    break
+            if index_and_score[i][1] > cls_logit*(1+0.8):
+                best_indexes.append(index_and_score[i][0])
+            else:
+                span = self.judge_id_in_span(index_and_score[i][0], entity_span)
+                best_entities.add(span)
+        return best_indexes, best_entities
     
     def judge_id_in_span(self, id, entity_span):
         for entity in entity_span:

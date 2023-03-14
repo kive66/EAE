@@ -45,6 +45,7 @@ print('程序运行时间:%s毫秒' % ((T2 - T1)*1000))
 # output = m(input)
 # print(output)
 l = [1,2,3,4,5,6]
+print(l[-3:])
 for i in l:
     print(l)
     if i == 3:

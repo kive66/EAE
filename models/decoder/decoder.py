@@ -18,13 +18,13 @@ class Decoder(nn.Module):
         self.role_decoder = RoleDecoder(config) # 对role进行预测
         
                 
-    def forward(self, token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_labels, entity_spans, char2token, entity2token):
+    def forward(self, token_ids, entities_ids, summar_ids, bertsum_ids, token_mask, entities_mask, summar_mask, bertsum_mask, role_starts, role_ends, entity_spans, char2token, entity2token):
         token_embedding = self.bert(token_ids, token_mask)[0]
         entities_embedding = self.bert(entities_ids, entities_mask)[0]
         summar_embedding = self.sum_encoder(self.bert, summar_ids, bertsum_ids, summar_mask, bertsum_mask)
         
         # 根据论元角色顺序进行双向预测
-        forward_loss, forward_logits = self.role_decoder(role_labels, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
+        forward_loss, forward_logits = self.role_decoder(role_starts, role_ends, summar_embedding, token_embedding, entities_embedding, token_mask, entities_mask, entity_spans, char2token, entity2token)
 
         # reversed_summar_role_embedding = torch.flip(summar_embedding, [0])
         # reversed_role_labels = torch.flip(role_labels, [0])

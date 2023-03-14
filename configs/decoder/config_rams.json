@@ -6,7 +6,7 @@
     "dev_path": "data/rams/decoder/dev.json",
     "test_path": "data/rams/decoder/test.json",
     "raw_path" :"data/rams/decoder/",
-    "event_path": "data/rams/event_role_multiplicities.txt",
+    "event_path": "data/rams/event_role_multiplicities_.txt",
     "save_path": "./exp/",
     "project_path": "./",
     "save_scriptList": [
@@ -34,7 +34,7 @@
     "max_seq_len": 512,
     "max_desc_seq_len": 512,
     "max_role_num" : 5,
-    "eval_step": 900,
+    "eval_step": 90,
     "log_step": 50,
     "shuffle": true,
     "num_workers": 1,

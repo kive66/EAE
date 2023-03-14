@@ -196,7 +196,8 @@ class TrainerBasic():
                 self.update_log_cache(train_log_cache, data, loss, model_output, 'train')
                 if self.should_log():
                     self.config.logger.info("step: {}/{}, Train loss: {:.2f}".format(self.total_batch%len(self.train_dataloader), len(self.train_dataloader), np.array(train_log_cache['loss']).mean()))
-                    self.calculate_matrics_and_save_log(train_log_cache, 'train')
+                    train_log_cache = self.init_log_cache()
+                    # self.calculate_matrics_and_save_log(train_log_cache, 'train')
                 save_end = time.perf_counter()
                 # print('save时间:%s毫秒\n' % ((save_end - save_start)*1000))
                 

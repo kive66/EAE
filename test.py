@@ -21,7 +21,7 @@ txt = 'dsf123as2sad'
 # l = [[1,2],[3,4]]
 # print(torch.tensor(l))
 tokenizer = AutoTokenizer.from_pretrained('bert-large-uncased', do_lower_case=True) # 构建tokenizer
-t = [['','place of employment', 'placeofemployment'],['aaaa','place of employment', 'placeofemployment']]
+t = [['!','place of employment', 'placeofemployment'],['aaaa','place of employment', 'placeofemployment']]
 t = tokenizer(
             t,
             padding="max_length",
@@ -33,6 +33,8 @@ t = tokenizer(
             return_offsets_mapping=True,
             return_tensors="pt"
         )
+c =tokenizer.tokenize('!')
+print(c)
 print(t.tokens(0))
 print(t.word_to_tokens(0,2).start)
 print(t.word_ids(0))
